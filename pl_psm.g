@@ -27,7 +27,7 @@ are permitted provided that the following conditions are met:
     * Redistributions in binary form must reproduce the above copyright notice,
       this list of conditions and the following disclaimer in the documentation
       and/or other materials provided with the distribution.
-    * Neither the name of the "Mage Systems" nor the names of its contributors
+    * Neither the name of the organization "Whamtech Inc." nor the names of its contributors
       may be used to endorse or promote products derived from this software
       without specific prior written permission.
 
@@ -45,8 +45,10 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 start_rule
-	:	(	ceate_trigger_statement
-		|	ceate_procedure_statement
+	:	(	create_module_statement
+	    |	create_trigger_statement
+		|	create_procedure_statement
+		|	create_function_statement
 		|	procedure_statement_list
 		)
 //		EOF?
@@ -175,266 +177,274 @@ fragment Zero__
 // ** Reserved Word Definitions                                                               **
 // ---------------------------------------------------------------------------------------------
 
-Abs				:	(A__ B__ S__ );
-Acos			:	(A__ C__ O__ S__ );
-After			:	(A__ F__ T__ E__ R__ );
-Allocate		:	(A__ L__ L__ O__ C__ A__ T__ E__ );
-And				:	(A__ N__ D__ );
-Array			:	(A__ R__ R__ A__ Y__ );
-As				:	(A__ S__ );
-Ascii			:	(A__ S__ C__ I__ I__ );
-Asin			:	(A__ S__ I__ N__ );
-Associate		:	(A__ S__ S__ O__ C__ I__ A__ T__ E__ );
-Atan			:	(A__ T__ A__ N__ );
-Atan2			:	(A__ T__ A__ N__ Two__ );
-Avg				:	(A__ V__ G__ );
-Begin			:	(B__ E__ G__ I__ N__ );
-Before			:	(B__ E__ F__ O__ R__ E__ );
-Between			:	(B__ E__ T__ W__ E__ E__ N__ );
-Bfile			:	(B__ F__ I__ L__ E__ );
-BigInt			:	(B__ I__ G__ I__ N__ T__ );
-Binary			:	(B__ I__ N__ A__ R__ Y__ );
-Bit				:	(B__ I__ T__ );
-Bit_Length		:	(B__ I__ T__  Underscore L__ E__ N__ G__ T__ H__ );
-Blob			:	(B__ L__ O__ B__ );
-Boolean			:	(B__ O__ O__ L__ E__ A__ N__ );
-Both			:	(B__ O__ T__ H__ );
-Byte			:	(B__ Y__ T__ E__ );
-Call			:	(C__ A__ L__ L__ );
-Caller			:	(C__ A__ L__ L__ E__ R__ );
-Case			:	(C__ A__ S__ E__ );
-Cast			:	(C__ A__ S__ T__ );
-Char			:	(C__ H__ A__ R__ );
-Character		:	(C__ H__ A__ R__ A__ C__ T__ E__ R__ );
-Character_Length:	(C__ H__ A__ R__ A__ C__ T__ E__ R__  Underscore L__ E__ N__ G__ T__ H__ );
-Char_Length		:	(C__ H__ A__ R__  Underscore L__ E__ N__ G__ T__ H__ );
-Client			:	(C__ L__ I__ E__ N__ T__ );
-Clob			:	(C__ L__ O__ B__ );
-Close			:	(C__ L__ O__ S__ E__ );
-Coalesce		:	(C__ O__ A__ L__ E__ S__ C__ E__ );
-Column_Name		:	(C__ O__ L__ U__ M__ N__  Underscore N__ A__ M__ E__ );
-Column			:	(C__ O__ L__ U__ M__ N__ );
-Concat			:	(C__ O__ N__ C__ A__ T__ );
-Condition		:	(C__ O__ N__ D__ I__ T__ I__ O__ N__ );
-Console			:	(C__ O__ N__ S__ O__ L__ E__ );
-Contains		:	(C__ O__ N__ T__ A__ I__ N__ S__ );
-Context			:	(C__ O__ N__ T__ E__ X__ T__ );
-Continue		:	(C__ O__ N__ T__ I__ N__ U__ E__ );
-Cos				:	(C__ O__ S__ );
-Count			:	(C__ O__ U__ N__ T__ );
-Create			:	(C__ R__ E__ A__ T__ E__ );
-Cursor			:	(C__ U__ R__ S__ O__ R__ );
-DateDiff		:	(D__ A__ T__ E__ D__ I__ F__ F__);
-DateTime		:	(D__ A__ T__ E__ T__ I__ M__ E__ );
-Date			:	(D__ A__ T__ E__ );
-Day_To_Second	:	(D__ A__ Y__  Underscore T__ O__  Underscore S__ E__ C__ O__ N__ D__ );
-DayOfYear		:	(D__ A__ Y__ O__ F__ Y__ E__ A__ R__);
-Day				:	(D__ A__ Y__ );
-Decimal			:	(D__ E__ C__ I__ M__ A__ L__ );
-Declare			:	(D__ E__ C__ L__ A__ R__ E__ );
-Dec				:	(D__ E__ C__ );
-Default			:	(D__ E__ F__ A__ U__ L__ T__ );
-Delete			:	(D__ E__ L__ E__ T__ E__ );
-Difference 		:	(D__ I__ F__ F__ E__ R__ E__ N__ C__ E__ );
-Dioagnostics	:	(D__ I__ A__ G__ N__ O__ S__ T__ I__ C__ S__ );
-Do				:	(D__ O__ );
-Double			:	(D__ O__ U__ B__ L__ E__ );
-Else			:	(E__ L__ S__ E__ );
-Elseif			:	(E__ L__ S__ E__ I__ F__ );
-End				:	(E__ N__ D__ );	
-Enum			:	(E__ N__ U__ M__ );
-Exception		:	(E__ X__ C__ E__ P__ T__ I__ O__ N__ );
-Exists			:	(E__ X__ I__ S__ T__ S__ );
-Exit			:	(E__ X__ I__ T__ );
-Exp				:	(E__ X__ P__ );
-Extract			:	(E__ X__ T__ R__ A__ C__ T__ );
-Fetch			:	(F__ E__ T__ C__ H__ );
-FileCopy		:	(F__ I__ L__ E__ C__ O__ P__ Y__ );
-FileCreate		:	(F__ I__ L__ E__ C__ R__ E__ A__ T__ E__ );
-FileDelete		:	(F__ I__ L__ E__ D__ E__ L__ E__ T__ E__ );
-FileDiff		:	(F__ I__ L__ E__ D__ I__ F__ F__ );
-FilePrint		:	(F__ I__ L__ E__ P__ R__ I__ N__ T__ );
-FileTouch		:	(F__ I__ L__ E__ T__ O__ U__ C__ H__ );
-File			:	(F__ I__ L__ E__ );
-Fixed			:	(F__ I__ X__ E__ D__ );
-Float			:	(F__ L__ O__ A__ T__ );
-Format			:	(F__ O__ R__ M__ A__ T__ );
-For				:	(F__ O__ R__ );
-Found			:	(F__ O__ U__ N__ D__ );
-From			:	(F__ R__ O__ M__ );
-Get				:	(G__ E__ T__ );
-Guid			:	(G__ U__ I__ D__  | U__ U__ I__ D__ );	
-Handler			:	(H__ A__ N__ D__ L__ E__ R__ );
-Hold			:	(H__ O__ L__ D__ );
-Hour			:	(H__ O__ U__ R__ );
-If				:	(I__ F__ );
-Igscore			:	(I__ G__ S__ C__ O__ R__ E__ );
-In				:	(I__ N__ );
-Inet			:	(I__ N__ E__ T__ );
-Insert			:	(I__ N__ S__ E__ R__ T__ );
-Instead			:	(I__ N__ S__ T__ E__ A__ D__ );
-Int				:	(I__ N__ T__ );
-Integer			:	(I__ N__ T__ E__ G__ E__ R__ );
-Interval		:	(I__ N__ T__ E__ R__ V__ A__ L__ );
-Into			:	(I__ N__ T__ O__ );
-Is				:	(I__ S__ );
-Iterate			:	(I__ T__ E__ R__ A__ T__ E__ );
-Key				:	(K__ E__ Y__ );
-Lcase			:	(L__ C__ A__ S__ E__ | L__ O__ W__ E__ R__ C__ A__ S__ E__ );
-Leading			:	(L__ E__ A__ D__ I__ N__ G__ );
-Leave			:	(L__ E__ A__ V__ E__ );
-Length			:	(L__ E__ N__ G__ T__ H__ );
-Like			:	(L__ I__ K__ E__ );
-Load			:	(L__ O__ A__ D__ );
-Locate			:	(L__ O__ C__ A__ T__ E__ );
-Locator			:	(L__ O__ C__ A__ T__ O__ R__ );
-Locators		:	(L__ O__ C__ A__ T__ O__ R__ S__ );
-Log				:	(L__ O__ G__ );
-Log10			:	(L__ O__ G__ One__ Zero__ );
-Log2			:	(L__ O__ G__ Two__ );
-Long			:	(L__ O__ N__ G__ );
-Loop			:	(L__ O__ O__ P__ );
-Lower 			:	(L__ O__ W__ E__ R__ );
-Ltrim			:	(L__ T__ R__ I__ M__ );
-Macaddr			:	(M__ A__ C__ A__ D__ D__ R__ );
-Max 			:	(M__ A__ X__ );
-MessageText		:	(M__ E__ S__ S__ A__ G__ E__  Underscore T__ E__ X__ T__ );
-Message			:	(M__ E__ S__ S__ A__ G__ E__ );
-Microsecond		:	(M__ I__ C__ R__ O__ S__ E__ C__ O__ N__ D__);
-Millisecond		:	(M__ I__ L__ L__ I__ S__ E__ C__ O__ N__ D__);
-Min 			:	(M__ I__ N__ );		
-Minute			:	(M__ I__ N__ U__ T__ E__ );
-Mod				:	(M__ O__ D__ );
-Money			:	(M__ O__ N__ E__ Y__ );
-Month			:	(M__ O__ N__ T__ H__ );
-Nanosecond		:	(N__ A__ N__ O__ S__ E__ C__ O__ N__ D__);
-Not				:	(N__ O__ T__ );
-Null			:	(N__ U__ L__ L__ );
-Numeric			:	(N__ U__ M__ E__ R__ I__ C__ );
-Nvl				:	(N__ V__ L__ );
-Nvl2			:	(N__ V__ L__ Two__ );
-Octet_Length	:	(O__ C__ T__ E__ T__  Underscore L__ E__ N__ G__ T__ H__ );
-Of				:	(O__ F__ );
-On				:	(O__ N__ );
-Open			:	(O__ P__ E__ N__ );
-Or				:	(O__ R__ );
-Parameter		:	(P__ A__ R__ A__ M__ E__ T__ E__ R__ );
-Position		:	(P__ O__ S__ I__ T__ I__ O__ N__ );
-Precision		:	(P__ R__ E__ C__ I__ S__ I__ O__ N__ );
-Procedure		:	(P__ R__ O__ C__ E__ D__ U__ R__ E__ );	
-Proc			:	(P__ R__ O__ C__ );
-Quarter			:	(Q__ U__ A__ R__ T__ E__ R__);
-Range			:	(R__ A__ N__ G__ E__ );
-Readline		:	(R__ E__ A__ D__ L__ I__ N__ E__ );
-Real			:	(R__ E__ A__ L__ );
-Repeat			:	(R__ E__ P__ E__ A__ T__ );
-Replace			:	(R__ E__ P__ L__ A__ C__ E__ );
-Resignal		:	(R__ E__ S__ I__ G__ N__ A__ L__ );
-Result			:	(R__ E__ S__ U__ L__ T__ );
-Return			:	(R__ E__ T__ U__ R__ N__ );
-Return_Status	:	(R__ E__ T__ U__ R__ N__  Underscore S__ T__ A__ T__ U__ S__ );
-Round			:	(R__ O__ U__ N__ D__ );
-RowID			:	(R__ O__ W__ I__ D__ );
-Rowset			:	(R__ O__ W__ S__ E__ T__ );
-Row_Count		:	(R__ O__ W__  Underscore C__ O__ U__ N__ T__ );
-Rtrim			:	(R__ T__ R__ I__ M__ );
-Second			:	(S__ E__ C__ O__ N__ D__ );
-Send			:	(S__ E__ N__ D__ );
-Set				:	(S__ E__ T__ );
-Signal			:	(S__ I__ G__ N__ A__ L__ );
-Sin				:	(S__ I__ N__ );
-Size			:	(S__ I__ Z__ E__ );
-SmallInt		:	(S__ M__ A__ L__ L__ I__ N__ T__ );
-SmallMoney		:	(S__ M__ A__ L__ L__ M__ O__ N__ E__ Y__ );
-Soundex			:	(S__ O__ U__ N__ D__ E__ X__ );
-Space			:	(S__ P__ A__ C__ E__ );
-SqlException	:	(S__ Q__ L__  Underscore E__ X__ C__ E__ P__ T__ I__ O__ N__ );
-SqlState		:	(S__ Q__ L__ S__ T__ A__ T__ E__ );
-SqlWarning		:	(S__ Q__ L__  Underscore W__ A__ R__ N__ I__ N__ G__ );
-Sqrt			:	(S__ Q__ R__ T__ );
-StdDev			:	(S__ T__ D__ D__ E__ V__  | S__ T__ D__  Underscore D__ E__ V__  | S__ T__ D__  Underscore D__ E__ V__ I__ A__ T__ I__ O__ N__ );
-Structure		:	(S__ T__ R__ U__ C__ T__ U__ R__ E__ );
-Substr			:	(S__ U__ B__ S__ T__ R__ );
-Substring 		:	(S__ U__ B__ S__ T__ R__ I__ N__ G__ );
-Sum 			:	(S__ U__ M__ );
-SumSquare 		:	(S__ U__ M__ S__ Q__ U__ A__ R__ E__  | S__ U__ M__ S__ Q__ U__ A__ R__ E__ S__  | S__ U__ M__ O__ F__ S__ Q__ U__ A__ R__ E__ S__ );
-Synonyms 		:	(S__ Y__ N__ O__ N__ Y__ M__ S__ );
-SysDate			:	(S__ Y__ S__ D__ A__ T__ E__ );
-SysDateTime		:	(S__ Y__ S__ D__ A__ T__ E__ T__ I__ M__ E__ );
-SysTime			:	(S__ Y__ S__ T__ I__ M__ E__ );
-SysTimestamp	:	(S__ Y__ S__ T__ I__ M__ E__ S__ T__ A__ M__ P__ );
-Table_Name		:	(T__ A__ B__ L__ E__  Underscore N__ A__ M__ E__ );
-Table			:	(T__ A__ B__ L__ E__ );
-Tan				:	(T__ A__ N__ );
-Text			:	(T__ E__ X__ T__ );
-Then			:	(T__ H__ E__ N__ );
-Time			:	(T__ I__ M__ E__ );
-Timestamp		:	(T__ I__ M__ E__ S__ T__ A__ M__ P__ );
-Timezone		:	(T__ I__ M__ E__ Z__ O__ N__ E__ );
-Timezone_Hour 	:	(T__ I__ M__ E__ Z__ O__ N__ E__  Underscore H__ O__ U__ R__ );
-Timezone_Minute	:	(T__ I__ M__ E__ Z__ O__ N__ E__  Underscore M__ I__ N__ U__ T__ E__ );
-TinyInt			:	(T__ I__ N__ Y__ I__ N__ T__ );
-To				:	(T__ O__ );
-To_Char			:	(T__ O__  Underscore C__ H__ A__ R__ );
-To_Date			:	(T__ O__  Underscore D__ A__ T__ E__ );
-To_DateTime		:	(T__ O__  Underscore D__ A__ T__ E__ T__ I__ M__ E__ );
-To_DSInterval	:	(T__ O__  Underscore D__ S__ I__ N__ T__ E__ R__ V__ A__ L__);
-To_Number		:	(T__ O__  Underscore N__ U__ M__ B__ E__ R__ );
-To_Time			:	(T__ O__  Underscore T__ I__ M__ E__ );
-To_Timestamp	:	(T__ O__  Underscore T__ I__ M__ E__ S__ T__ A__ M__ P__ );
-To_YMInterval	:	(T__ O__  Underscore Y__ M__ I__ N__ T__ E__ R__ V__ A__ L__);
-Trace			:	(T__ R__ A__ C__ E__ );
-Trailing		:	(T__ R__ A__ I__ L__ I__ N__ G__ );
-Trigger			:	(T__ R__ I__ G__ G__ E__ R__ );
-Trim 			:	(T__ R__ I__ M__ );
-Trunc			:	(T__ R__ U__ N__ C__ );
-UBigInt			:	(U__ B__ I__ G__ I__ N__ T__ );
-Ucase			:	(U__ C__ A__ S__ E__ );
-UInt			:	(U__ I__ N__ T__ );
-UInteger		:	(U__ I__ N__ T__ E__ G__ E__ R__ );
-Undo			:	(U__ N__ D__ O__ );
-Until			:	(U__ N__ T__ I__ L__ );
-Update			:	(U__ P__ D__ A__ T__ E__ );
-Upper 			:	(U__ P__ P__ E__ R__ );
-Url				:	(U__ R__ L__ );
-USmallInt		:	(U__ S__ M__ A__ L__ L__ I__ N__ T__ );
-Value			:	(V__ A__ L__ U__ E__ );
-Var 			:	(V__ A__ R__  | V__ A__ R__ I__ A__ N__ C__ E__ );
-VarBinary		:	(V__ A__ R__ B__ I__ N__ A__ R__ Y__ );
-VarChar			:	(V__ A__ R__ C__ H__ A__ R__ );
-Varying			:	(V__ A__ R__ Y__ I__ N__ G__ );
-View			:	(V__ I__ E__ W__ );
-Virtual			:	(V__ I__ R__ T__ U__ A__ L__ );
-Week			:	(W__ E__ E__ K__);
-When			:	(W__ H__ E__ N__ );
-While			:	(W__ H__ I__ L__ E__ );
-With			:	(W__ I__ T__ H__ );
-Writeline		:	(W__ R__ I__ T__ E__ L__ I__ N__ E__ );
-Xml				:	(X__ M__ L__ );
-Year			:	(Y__ E__ A__ R__ );
-Year_To_Month	:	(Y__ E__ A__ R__  Underscore T__ O__  Underscore M__ O__ N__ T__ H__ );
+R_Abs			:	(A__ B__ S__ );
+R_Acos			:	(A__ C__ O__ S__ );
+R_After			:	(A__ F__ T__ E__ R__ );
+R_Allocate		:	(A__ L__ L__ O__ C__ A__ T__ E__ );
+R_And			:	(A__ N__ D__ );
+R_Array			:	(A__ R__ R__ A__ Y__ );
+R_As			:	(A__ S__ );
+R_Ascii			:	(A__ S__ C__ I__ I__ );
+R_Asin			:	(A__ S__ I__ N__ );
+R_Associate		:	(A__ S__ S__ O__ C__ I__ A__ T__ E__ );
+R_Atan			:	(A__ T__ A__ N__ );
+R_Atan2			:	(A__ T__ A__ N__ Two__ );
+R_Avg			:	(A__ V__ G__ );
+R_Begin			:	(B__ E__ G__ I__ N__ );
+R_Before		:	(B__ E__ F__ O__ R__ E__ );
+R_Between		:	(B__ E__ T__ W__ E__ E__ N__ );
+R_Bfile			:	(B__ F__ I__ L__ E__ );
+R_BigInt		:	(B__ I__ G__ I__ N__ T__ );
+R_Binary		:	(B__ I__ N__ A__ R__ Y__ );
+R_Bit			:	(B__ I__ T__ );
+R_Bit_Length	:	(B__ I__ T__  Underscore L__ E__ N__ G__ T__ H__ );
+R_Blob			:	(B__ L__ O__ B__ );
+R_Boolean		:	(B__ O__ O__ L__ E__ A__ N__ );
+R_Both			:	(B__ O__ T__ H__ );
+R_Byte			:	(B__ Y__ T__ E__ );
+R_Call			:	(C__ A__ L__ L__ );
+R_Caller		:	(C__ A__ L__ L__ E__ R__ );
+R_Case			:	(C__ A__ S__ E__ );
+R_Cast			:	(C__ A__ S__ T__ );
+R_Char_Length	:	(C__ H__ A__ R__  Underscore L__ E__ N__ G__ T__ H__ );
+R_Char			:	(C__ H__ A__ R__ );
+R_Character_Length:	(C__ H__ A__ R__ A__ C__ T__ E__ R__  Underscore L__ E__ N__ G__ T__ H__ );
+R_Character		:	(C__ H__ A__ R__ A__ C__ T__ E__ R__ );
+R_Client		:	(C__ L__ I__ E__ N__ T__ );
+R_Clob			:	(C__ L__ O__ B__ );
+R_Close			:	(C__ L__ O__ S__ E__ );
+R_Coalesce		:	(C__ O__ A__ L__ E__ S__ C__ E__ );
+R_Collate       :   (C__ O__ L__ L__ A__ T__ E__ );
+R_Column_Name	:	(C__ O__ L__ U__ M__ N__  Underscore N__ A__ M__ E__ );
+R_Column		:	(C__ O__ L__ U__ M__ N__ );
+R_Concat		:	(C__ O__ N__ C__ A__ T__ );
+R_Condition		:	(C__ O__ N__ D__ I__ T__ I__ O__ N__ );
+R_Console		:	(C__ O__ N__ S__ O__ L__ E__ );
+R_Contains		:	(C__ O__ N__ T__ A__ I__ N__ S__ );
+R_Context		:	(C__ O__ N__ T__ E__ X__ T__ );
+R_Continue		:	(C__ O__ N__ T__ I__ N__ U__ E__ );
+R_Cos			:	(C__ O__ S__ );
+R_Count			:	(C__ O__ U__ N__ T__ );
+R_Create		:	(C__ R__ E__ A__ T__ E__ );
+R_Cursor		:	(C__ U__ R__ S__ O__ R__ );
+R_DateDiff		:	(D__ A__ T__ E__ D__ I__ F__ F__);
+R_DateTime		:	(D__ A__ T__ E__ T__ I__ M__ E__ );
+R_Date			:	(D__ A__ T__ E__ );
+R_Day_To_Second	:	(D__ A__ Y__  Underscore T__ O__  Underscore S__ E__ C__ O__ N__ D__ );
+R_DayOfYear		:	(D__ A__ Y__ O__ F__ Y__ E__ A__ R__);
+R_Day			:	(D__ A__ Y__ );
+R_Decimal		:	(D__ E__ C__ I__ M__ A__ L__ );
+R_Declare		:	(D__ E__ C__ L__ A__ R__ E__ );
+R_Dec			:	(D__ E__ C__ );
+R_Default		:	(D__ E__ F__ A__ U__ L__ T__ );
+R_Delete		:	(D__ E__ L__ E__ T__ E__ );
+R_Difference 	:	(D__ I__ F__ F__ E__ R__ E__ N__ C__ E__ );
+R_Diagnostics	:	(D__ I__ A__ G__ N__ O__ S__ T__ I__ C__ S__ );
+R_Do			:	(D__ O__ );
+R_Double		:	(D__ O__ U__ B__ L__ E__ );
+R_Elseif		:	(E__ L__ S__ E__ I__ F__ );
+R_Else			:	(E__ L__ S__ E__ );
+R_End			:	(E__ N__ D__ );	
+R_Enum			:	(E__ N__ U__ M__ );
+R_Exception		:	(E__ X__ C__ E__ P__ T__ I__ O__ N__ );
+R_Exists		:	(E__ X__ I__ S__ T__ S__ );
+R_Exit			:	(E__ X__ I__ T__ );
+R_Exp			:	(E__ X__ P__ );
+R_Extract		:	(E__ X__ T__ R__ A__ C__ T__ );
+R_Fetch			:	(F__ E__ T__ C__ H__ );
+R_FileCopy		:	(F__ I__ L__ E__ C__ O__ P__ Y__ );
+R_FileCreate	:	(F__ I__ L__ E__ C__ R__ E__ A__ T__ E__ );
+R_FileDelete	:	(F__ I__ L__ E__ D__ E__ L__ E__ T__ E__ );
+R_FileDiff		:	(F__ I__ L__ E__ D__ I__ F__ F__ );
+R_FilePrint		:	(F__ I__ L__ E__ P__ R__ I__ N__ T__ );
+R_FileTouch		:	(F__ I__ L__ E__ T__ O__ U__ C__ H__ );
+R_File			:	(F__ I__ L__ E__ );
+R_Fixed			:	(F__ I__ X__ E__ D__ );
+R_Float			:	(F__ L__ O__ A__ T__ );
+R_Format		:	(F__ O__ R__ M__ A__ T__ );
+R_For			:	(F__ O__ R__ );
+R_Found			:	(F__ O__ U__ N__ D__ );
+R_From			:	(F__ R__ O__ M__ );
+R_Function      :   (F__ U__ N__ C__ T__ I__ O__ N__ );
+R_Get			:	(G__ E__ T__ );
+R_Guid			:	(G__ U__ I__ D__  | U__ U__ I__ D__ );	
+R_Handler		:	(H__ A__ N__ D__ L__ E__ R__ );
+R_Hold			:	(H__ O__ L__ D__ );
+R_Hour			:	(H__ O__ U__ R__ );
+R_If			:	(I__ F__ );
+R_Igscore		:	(I__ G__ S__ C__ O__ R__ E__ );
+R_Inet			:	(I__ N__ E__ T__ );
+R_Insert		:	(I__ N__ S__ E__ R__ T__ );
+R_Instead		:	(I__ N__ S__ T__ E__ A__ D__ );
+R_Integer		:	(I__ N__ T__ E__ G__ E__ R__ );
+R_Interval		:	(I__ N__ T__ E__ R__ V__ A__ L__ );
+R_Into			:	(I__ N__ T__ O__ );
+R_Int			:	(I__ N__ T__ );
+R_In			:	(I__ N__ );
+R_Is			:	(I__ S__ );
+R_Iterate		:	(I__ T__ E__ R__ A__ T__ E__ );
+R_Key			:	(K__ E__ Y__ );
+R_Lcase			:	(L__ C__ A__ S__ E__ | L__ O__ W__ E__ R__ C__ A__ S__ E__ );
+R_Leading		:	(L__ E__ A__ D__ I__ N__ G__ );
+R_Leave			:	(L__ E__ A__ V__ E__ );
+R_Length		:	(L__ E__ N__ G__ T__ H__ );
+R_Like			:	(L__ I__ K__ E__ );
+R_Load			:	(L__ O__ A__ D__ );
+R_Local         :   (L__ O__ C__ A__ L__ );
+R_Locate		:	(L__ O__ C__ A__ T__ E__ );
+R_Locators		:	(L__ O__ C__ A__ T__ O__ R__ S__ );
+R_Locator		:	(L__ O__ C__ A__ T__ O__ R__ );
+R_Log10			:	(L__ O__ G__ One__ Zero__ );
+R_Log2			:	(L__ O__ G__ Two__ );
+R_Log			:	(L__ O__ G__ );
+R_Long			:	(L__ O__ N__ G__ );
+R_Loop			:	(L__ O__ O__ P__ );
+R_Lower 		:	(L__ O__ W__ E__ R__ );
+R_Ltrim			:	(L__ T__ R__ I__ M__ );
+R_Macaddr		:	(M__ A__ C__ A__ D__ D__ R__ );
+R_Max 			:	(M__ A__ X__ );
+R_Message_Text	:	(M__ E__ S__ S__ A__ G__ E__  Underscore T__ E__ X__ T__ );
+R_Message		:	(M__ E__ S__ S__ A__ G__ E__ );
+R_Microsecond	:	(M__ I__ C__ R__ O__ S__ E__ C__ O__ N__ D__);
+R_Millisecond	:	(M__ I__ L__ L__ I__ S__ E__ C__ O__ N__ D__);
+R_Minute		:	(M__ I__ N__ U__ T__ E__ );
+R_Min 			:	(M__ I__ N__ );		
+R_Module        :   (M__ O__ D__ U__ L__ E__ );
+R_Mod			:	(M__ O__ D__ );
+R_Money			:	(M__ O__ N__ E__ Y__ );
+R_Month			:	(M__ O__ N__ T__ H__ );
+R_Nanosecond	:	(N__ A__ N__ O__ S__ E__ C__ O__ N__ D__);
+R_Not			:	(N__ O__ T__ );
+R_Null			:	(N__ U__ L__ L__ );
+R_Numeric		:	(N__ U__ M__ E__ R__ I__ C__ );
+R_Nvl2			:	(N__ V__ L__ Two__ );
+R_Nvl			:	(N__ V__ L__ );
+R_Octet_Length	:	(O__ C__ T__ E__ T__  Underscore L__ E__ N__ G__ T__ H__ );
+R_Of			:	(O__ F__ );
+R_On			:	(O__ N__ );
+R_Open			:	(O__ P__ E__ N__ );
+R_Or			:	(O__ R__ );
+R_Path          :   (P__ A__ T__ H__ );
+R_Parameter		:	(P__ A__ R__ A__ M__ E__ T__ E__ R__ );
+R_Position		:	(P__ O__ S__ I__ T__ I__ O__ N__ );
+R_Precision		:	(P__ R__ E__ C__ I__ S__ I__ O__ N__ );
+R_Procedure		:	(P__ R__ O__ C__ E__ D__ U__ R__ E__ );	
+R_Proc			:	(P__ R__ O__ C__ );
+R_Quarter		:	(Q__ U__ A__ R__ T__ E__ R__);
+R_Range			:	(R__ A__ N__ G__ E__ );
+R_Readline		:	(R__ E__ A__ D__ L__ I__ N__ E__ );
+R_Real			:	(R__ E__ A__ L__ );
+R_Repeat		:	(R__ E__ P__ E__ A__ T__ );
+R_Replace		:	(R__ E__ P__ L__ A__ C__ E__ );
+R_Resignal		:	(R__ E__ S__ I__ G__ N__ A__ L__ );
+R_Result		:	(R__ E__ S__ U__ L__ T__ );
+R_Return_Status	:	(R__ E__ T__ U__ R__ N__  Underscore S__ T__ A__ T__ U__ S__ );
+R_Returns		:	(R__ E__ T__ U__ R__ N__ S__ );
+R_Return		:	(R__ E__ T__ U__ R__ N__ );
+R_Round			:	(R__ O__ U__ N__ D__ );
+R_RowID			:	(R__ O__ W__ I__ D__ );
+R_Rowset		:	(R__ O__ W__ S__ E__ T__ );
+R_Row_Count		:	(R__ O__ W__  Underscore C__ O__ U__ N__ T__ );
+R_Rtrim			:	(R__ T__ R__ I__ M__ );
+R_Schema        :   (S__ C__ H__ E__ M__ A__ );
+R_Second		:	(S__ E__ C__ O__ N__ D__ );
+R_Select		:	(S__ E__ L__ E__ C__ T__ );
+R_Send			:	(S__ E__ N__ D__ );
+R_Set			:	(S__ E__ T__ );
+R_Signal		:	(S__ I__ G__ N__ A__ L__ );
+R_Sin			:	(S__ I__ N__ );
+R_Size			:	(S__ I__ Z__ E__ );
+R_SmallInt		:	(S__ M__ A__ L__ L__ I__ N__ T__ );
+R_SmallMoney	:	(S__ M__ A__ L__ L__ M__ O__ N__ E__ Y__ );
+R_Soundex		:	(S__ O__ U__ N__ D__ E__ X__ );
+R_Space			:	(S__ P__ A__ C__ E__ );
+R_Sql_Exception	:	(S__ Q__ L__  Underscore E__ X__ C__ E__ P__ T__ I__ O__ N__ );
+R_SqlState		:	(S__ Q__ L__ S__ T__ A__ T__ E__ );
+R_Sql_Warning	:	(S__ Q__ L__  Underscore W__ A__ R__ N__ I__ N__ G__ );
+R_Sqrt			:	(S__ Q__ R__ T__ );
+R_StdDev		:	(S__ T__ D__ D__ E__ V__  | S__ T__ D__  Underscore D__ E__ V__  | S__ T__ D__  Underscore D__ E__ V__ I__ A__ T__ I__ O__ N__ );
+R_Structure		:	(S__ T__ R__ U__ C__ T__ U__ R__ E__ );
+R_Substr		:	(S__ U__ B__ S__ T__ R__ );
+R_Substring 	:	(S__ U__ B__ S__ T__ R__ I__ N__ G__ );
+R_SumSquare 	:	(S__ U__ M__ S__ Q__ U__ A__ R__ E__  | S__ U__ M__ S__ Q__ U__ A__ R__ E__ S__  | S__ U__ M__ O__ F__ S__ Q__ U__ A__ R__ E__ S__ );
+R_Sum 			:	(S__ U__ M__ );
+R_Synonyms 		:	(S__ Y__ N__ O__ N__ Y__ M__ S__ );
+R_SysDate		:	(S__ Y__ S__ D__ A__ T__ E__ );
+R_SysDateTime	:	(S__ Y__ S__ D__ A__ T__ E__ T__ I__ M__ E__ );
+R_SysTime		:	(S__ Y__ S__ T__ I__ M__ E__ );
+R_SysTimestamp	:	(S__ Y__ S__ T__ I__ M__ E__ S__ T__ A__ M__ P__ );
+R_Table_Name	:	(T__ A__ B__ L__ E__  Underscore N__ A__ M__ E__ );
+R_Table			:	(T__ A__ B__ L__ E__ );
+R_Tan			:	(T__ A__ N__ );
+R_Temporary     :   (T__ E__ M__ P__ O__ R__ A__ R__ Y__ );
+R_Text			:	(T__ E__ X__ T__ );
+R_Then			:	(T__ H__ E__ N__ );
+R_Timestamp		:	(T__ I__ M__ E__ S__ T__ A__ M__ P__ );
+R_Timezone_Hour	:	(T__ I__ M__ E__ Z__ O__ N__ E__  Underscore H__ O__ U__ R__ );
+R_Timezone_Minute :	(T__ I__ M__ E__ Z__ O__ N__ E__  Underscore M__ I__ N__ U__ T__ E__ );
+R_Timezone		:	(T__ I__ M__ E__ Z__ O__ N__ E__ );
+R_Time			:	(T__ I__ M__ E__ );
+R_TinyInt		:	(T__ I__ N__ Y__ I__ N__ T__ );
+R_To_Char		:	(T__ O__  Underscore C__ H__ A__ R__ );
+R_To_DateTime	:	(T__ O__  Underscore D__ A__ T__ E__ T__ I__ M__ E__ );
+R_To_Date		:	(T__ O__  Underscore D__ A__ T__ E__ );
+R_To_DSInterval	:	(T__ O__  Underscore D__ S__ I__ N__ T__ E__ R__ V__ A__ L__);
+R_To_Number		:	(T__ O__  Underscore N__ U__ M__ B__ E__ R__ );
+R_To_Timestamp	:	(T__ O__  Underscore T__ I__ M__ E__ S__ T__ A__ M__ P__ );
+R_To_Time		:	(T__ O__  Underscore T__ I__ M__ E__ );
+R_To_YMInterval	:	(T__ O__  Underscore Y__ M__ I__ N__ T__ E__ R__ V__ A__ L__);
+R_To			:	(T__ O__ );
+R_Trace			:	(T__ R__ A__ C__ E__ );
+R_Trailing		:	(T__ R__ A__ I__ L__ I__ N__ G__ );
+R_Trigger		:	(T__ R__ I__ G__ G__ E__ R__ );
+R_Trim 			:	(T__ R__ I__ M__ );
+R_Trunc			:	(T__ R__ U__ N__ C__ );
+R_UBigInt		:	(U__ B__ I__ G__ I__ N__ T__ );
+R_Ucase			:	(U__ C__ A__ S__ E__ );
+R_UInteger		:	(U__ I__ N__ T__ E__ G__ E__ R__ );
+R_UInt			:	(U__ I__ N__ T__ );
+R_Undo			:	(U__ N__ D__ O__ );
+R_Until			:	(U__ N__ T__ I__ L__ );
+R_Update		:	(U__ P__ D__ A__ T__ E__ );
+R_Upper 		:	(U__ P__ P__ E__ R__ );
+R_Url			:	(U__ R__ L__ );
+R_USmallInt		:	(U__ S__ M__ A__ L__ L__ I__ N__ T__ );
+R_Value			:	(V__ A__ L__ U__ E__ );
+R_Var 			:	(V__ A__ R__  | V__ A__ R__ I__ A__ N__ C__ E__ );
+R_VarBinary		:	(V__ A__ R__ B__ I__ N__ A__ R__ Y__ );
+R_VarChar		:	(V__ A__ R__ C__ H__ A__ R__ );
+R_Varying		:	(V__ A__ R__ Y__ I__ N__ G__ );
+R_View			:	(V__ I__ E__ W__ );
+R_Virtual		:	(V__ I__ R__ T__ U__ A__ L__ );
+R_Week			:	(W__ E__ E__ K__);
+R_When			:	(W__ H__ E__ N__ );
+R_While			:	(W__ H__ I__ L__ E__ );
+R_With			:	(W__ I__ T__ H__ );
+R_Writeline		:	(W__ R__ I__ T__ E__ L__ I__ N__ E__ );
+R_Xml			:	(X__ M__ L__ );
+R_Year_To_Month	:	(Y__ E__ A__ R__  Underscore T__ O__  Underscore M__ O__ N__ T__ H__ );
+R_Year			:	(Y__ E__ A__ R__ );
 
-SelectInto		:	(S__ E__ L__ E__ C__ T__ ) WhiteSpace+ (I__ N__ T__ O__) ( options {greedy=false;} : . )* Semicolon;
+ExecSQLStatement:	(E__ X__ E__ C__ ) WhiteSpace+ (S__ Q__ L__ ) ( options {greedy=false;} : . )* (E__ N__ D__ E__ X__ E__ C__ );
+ExecTQLStatement:	(E__ X__ E__ C__ ) WhiteSpace+ (T__ Q__ L__ ) ( options {greedy=false;} : . )* (E__ N__ D__ E__ X__ E__ C__ );
 
-Select			:	(S__ E__ L__ E__ C__ T__ ) ( options {greedy=false;} : . )* Semicolon;
-
-Semicolon		:	';';
-AssignEq		:	':=';
-LeftParen		:	'(';
-RightParen		:	')';
-QuestionMark	:	'?';
-Bar				:	'|';
-Period			:	'.';
-Comma			:	',';
-Colon			:	':';
-LeftBracket		:	'[';
-RightBracket	:	']';
-RelOp_EQ		:	'=';
-RelOp_NE		:	'!=' | '<>';	
-RelOp_GE		:	'>=' | '!<';
-RelOp_GT		:	'>';
-RelOp_LE		:	'<=' ! '!>';
-RelOp_LT		:	'<';
+S_Semicolon		:	';';
+S_AssignEq		:	':=';
+S_LeftParen		:	'(';
+S_RightParen	:	')';
+S_QuestionMark	:	'?';
+S_Bar			:	'|';
+S_Period		:	'.';
+S_Comma			:	',';
+S_Colon			:	':';
+S_LeftBracket	:	'[';
+S_RightBracket	:	']';
+S_RelOp_EQ		:	'=';
+S_RelOp_NE		:	'!=' | '<>';	
+S_RelOp_GE		:	'>=' | '!<';
+S_RelOp_GT		:	'>';
+S_RelOp_LE		:	'<=' ! '!>';
+S_RelOp_LT		:	'<';
 	
 fragment
 DoubleQuote
@@ -461,7 +471,7 @@ StringTerm
 	:	SingleQuote ( StringChar )* SingleQuote 
 	;
 	
-String_Constant
+V_String_Constant
 	:	(StringTerm)+
 	;
 	
@@ -469,7 +479,7 @@ fragment
 DigitOrLetter
 	:	Digit | Letter;
 	
-SqlStateString
+V_SqlState_Constant
 	:	DoubleQuote d1=DigitOrLetter 
 					d2=DigitOrLetter 
 					{IsNotDoubleZero($d1.text->chars, $d2.text->chars) }?
@@ -479,11 +489,11 @@ SqlStateString
 		DoubleQuote
 	;
 	
-Char_Constant
+V_Char_Constant
 	:	DoubleQuote (Escape DoubleQuote | ~DoubleQuote ) DoubleQuote
 	;
 	
-Identifier	
+V_Identifier	
 	:	Letter (Letter | Digit | Underscore | DollarSign | HashSign)*
 	;
 	
@@ -533,18 +543,6 @@ fragment
 HexQuad     :   HexPair HexPair;
 
 fragment
-Unsigned_Integer:;
-
-fragment
-Signed_Integer	:;
-
-fragment
-Unsigned_Float	:;
-
-fragment
-Signed_Float	:;
-
-fragment
 HexInteger
 	:	X__	HexPair ( HexPair ( HexQuad (HexQuad HexQuad)? )? )?
 	;
@@ -584,47 +582,59 @@ UnsignedInteger
 	:	( '1'..'9' ) Digit* 
 	;
 	
+fragment
+V_Unsigned_Integer_Constant:;
+
+fragment
+V_Signed_Integer_Constant:;
+
+fragment
+V_Unsigned_Float_Constant:;
+
+fragment
+V_Signed_Float_Constant :;
+
 Numeric_Constant	:
 	(	'0'
 			(	HexInteger
-				{ _type  =  Unsigned_Integer; }
+				{ _type  =  V_Unsigned_Integer_Constant; }
 
 			|	OctalInteger
-				{ _type  =  Unsigned_Integer; }
+				{ _type  =  V_Unsigned_Integer_Constant; }
 				
 			|	Binary_Integer 
-				{ _type  =  Unsigned_Integer; }
+				{ _type  =  V_Unsigned_Integer_Constant; }
 				
 			|	PointFloat
-				{ _type  =  Unsigned_Float; }
+				{ _type  =  V_Unsigned_Float_Constant; }
 				
 			|	Digit*
-				{ _type  =  Unsigned_Integer; }
+				{ _type  =  V_Unsigned_Integer_Constant; }
 			)
 			  
 	|	UnsignedInteger
 			(	PointFloat
-				{ _type  =  Unsigned_Float; }
+				{ _type  =  V_Unsigned_Float_Constant; }
 				
 			|	{true}?
-				{ _type  =  Unsigned_Integer; }
+				{ _type  =  V_Unsigned_Integer_Constant; }
 			)
 			
 	|	SignedInteger 
 			(	PointFloat
 				{
-					_type  =  Signed_Float;
+					_type  =  V_Signed_Float_Constant;
 				}
 				
 			|	{true}?
 				{
-					_type  =  Signed_Integer;
+					_type  =  V_Signed_Integer_Constant;
 				}
 			)
 			
 	|	PointFloat
 			{
-				_type  =  Unsigned_Float;
+				_type  =  V_Unsigned_Float_Constant;
 			}
 	);
 
@@ -643,28 +653,31 @@ MinusSign
 	:	'-'
 	;
 	
-Plus
+S_Plus
 	:	'+'
 	;
 	
-Minus
+S_Minus
 	:	'-'
 	;
 	
-Mult
+S_Mult
 	:	'*'
 	;
 
-Divide	:	'/'
+S_Divide
+	:	'/'
 	;
 	
-Modulo	:	'%'
+S_Modulo
+	:	'%'
 	;
 	
 fragment
 EndOfLine
 	:	( ('\r' | '\n') => '\r\n' | '\r' | '\n' )
 	; 
+	
 EOL	:	r=	EndOfLine
 		{	$channel=HIDDEN;
 			INPUT->line++;
@@ -679,7 +692,6 @@ WhiteSpace
 	
 WS	:	r=	WhiteSpace
 		{	$channel=HIDDEN;
-//			fprintf(stderr, "Whitespace[\%s]",$r->getText($r)->chars); 
 		}
     ;
     
@@ -687,6 +699,7 @@ fragment
 SingleLineComment
 	:	( '--' ~('\n'|'\r')* '\r'? '\n' )
 	;
+	
 SL_COMMENT
     :	r=	SingleLineComment
 		{	$channel=HIDDEN;
@@ -698,6 +711,7 @@ fragment
 MultiLineComment
 	:	( '/*' ( options {greedy=false;} : . )* '*/' )
 	;
+	
 ML_COMMENT
     :	r=	MultiLineComment
 		{	$channel=HIDDEN;
@@ -723,9 +737,82 @@ ML_COMMENT
 // ** PL/PSM Statement Definitions                                                            **
 // ---------------------------------------------------------------------------------------------
 
-ceate_trigger_statement
-	:	Create Trigger
-		(	sch1=schema_name Period 
+create_module_statement
+  :   R_Create R_Module
+      (   R_Default? R_Character R_Set character_set_name
+          (R_Collate collation_name)?
+      )?
+      (   R_Schema  (R_Default | schema_name) 
+      )?
+      (   R_Path    schema_name (S_Comma schema_name)*
+      )?
+      (   declare_table_statement
+          S_Semicolon
+      )*
+      (   (   R_Declare (R_Proc | R_Procedure)
+	          procedure_declaration
+		      R_As
+		      block_statement
+		      
+		  |   R_Declare R_Function
+              procedure_declaration
+              R_Returns elementary_type_name
+		      R_As
+		      block_statement
+		  )
+		  S_Semicolon
+      )+
+      R_End R_Module
+  ;
+/*
+CREATE MODULE <Module name>
+   [[DEFAULT] CHARACTER SET charset_name]
+    [COLLATE collation_name]]
+   [ SCHEMA default <Schema name>]
+   [ PATH <Schema name> [ {,<Schema name>}... ] ]
+   [ DECLARE TABLE statement(s) ]
+   <SQL-invoked routine>; ...
+   END MODULE
+*/
+  
+declare_table_statement
+@init	{char * tableName = NULL;}
+    :   R_Declare R_Local R_Temporary R_Table
+        tbl=new_table_name
+        { tableName = $tbl.text->chars; }
+        { declareTempTable(tableName); }
+        S_LeftParen
+        column_definition[tableName] (S_Comma column_definition[tableName])
+        S_RightParen
+    ;   
+    
+column_definition[char * tableName]
+@init   {char * typeName = NULL; char * defaultExp = NULL; bool isKey = false;}
+    :	col=new_column_name 
+        typ=datatype_name 
+		{ typeName = $typ.text->chars; }
+		(   R_Key  
+		    { isKey = true; }
+		)?
+		(   R_Default exp=typed_constant[typeName]
+		    { defaultExp = $exp.text->chars; }    
+		)?
+		{declareColumn(tableName, $col.text->chars, typeName, isKey, defaultExp);}
+    ;
+/*
+DECLARE LOCAL TEMPORARY TABLE [ MODULE. ]<R_Table name>
+   (<table element> [ {,<table element>}... ])
+   [ ON COMMIT {PRESERVE ROWS | DELETE ROWS} ]
+
+         <table element> ::=
+         <Column definition> | 
+         <R_Table Constraint> | 
+         LIKE <R_Table name> | 
+         <Column name> WITH OPTIONS <column option list>
+*/
+create_trigger_statement
+	:	R_Create R_Trigger
+		(	sch1=schema_name S_Period 
 			(	name1=new_trigger_name 
 				{declareSchemaTrigger($sch1.text->chars, $name1.text->chars);}
 			|	name1=new_trigger_number
@@ -738,9 +825,9 @@ ceate_trigger_statement
 				{declareTrigger($name1.text->chars);}
 			)
 		)
-		On
-		(	Table
-			(	sch2=schema_name Period 
+		R_On
+		(	R_Table
+			(	sch2=schema_name S_Period 
 				name2a=table_name 
 				{IsSchemaTableName($sch2.text->chars, $name2a.text->chars) }?
 			
@@ -748,8 +835,8 @@ ceate_trigger_statement
 				{IsTableName($name2b.text->chars);}
 			)
 		
-		|	View
-			(	sch3=schema_name Period 
+		|	R_View
+			(	sch3=schema_name S_Period 
 				name3a=view_name 
 				{IsSchemaTableName($sch3.text->chars, $name3a.text->chars) }?
 			
@@ -757,8 +844,8 @@ ceate_trigger_statement
 				{IsTableName($name3b.text->chars);}
 			)
 		
-		|	Column
-			(	sch4=schema_name Period 
+		|	R_Column
+			(	sch4=schema_name S_Period 
 				name4a=table_name 
 				name4a2=column_name[$sch4.text->chars, $name4a.text->chars]
 				{IsSchemaColumnName($sch4.text->chars, $name4a.text->chars, $name4a2.text->chars) }?
@@ -768,8 +855,8 @@ ceate_trigger_statement
 				{IsColumnName($name4b.text->chars, $name4b2.text->chars);}
 			)
 		
-		|	Virtual? Key
-			(	sch5=schema_name Period 
+		|	R_Virtual? R_Key
+			(	sch5=schema_name S_Period 
 				name5a=table_name 
 				name5a2=key_column_name[$sch5.text->chars, $name5a.text->chars] 
 				{IsSchemaKeyName($sch5.text->chars, $name5a.text->chars, $name5a2.text->chars) }?
@@ -781,9 +868,9 @@ ceate_trigger_statement
 		)
 		trigger_event
 		procedure_specifier
-		As
-		(	(Proc | Procedure)
-			(	sch=schema_name Period 
+		R_As
+		(	(R_Proc | R_Procedure)
+			(	sch=schema_name S_Period 
 				(	name1=procedure_name 
 					{declareSchemaProcedure($sch.text->chars, $name1.text->chars);}
 				|	num1=procedure_number
@@ -799,27 +886,26 @@ ceate_trigger_statement
 			
 		|	block_statement
 		)
-		Semicolon?
 	;
 
 trigger_event
-	:	(Before | After | Instead Of)
-		(Insert | Update | Delete | Fetch | Load)
+	:	(R_Before | R_After | R_Instead R_Of)
+		(R_Insert | R_Update | R_Delete | R_Fetch | R_Load)
 	;
 	
 procedure_specifier
-	:	With
-		procedure_option (Comma procedure_option)*
+	:	R_With
+		procedure_option (S_Comma procedure_option)*
 	;
 	
 procedure_option
-	:	new_parameter_name AssignEq
-		(	Table_Name
-		|	Column_Name (Period Value)?
-		|	RowID
-		|	Date
-		|	Time
-		|	Timestamp
+	:	new_parameter_name S_AssignEq
+		(	R_Table_Name
+		|	R_Column_Name (S_Period R_Value)?
+		|	R_RowID
+		|	R_Date
+		|	R_Time
+		|	R_Timestamp
 		|	constant 
 		)
 	;
@@ -829,32 +915,47 @@ CREATE TRIGGER [schema_name.] trigger_name
 ON { TABLE schema_name[.table_name] 
    | VIEW schema_name[.view_name] 
    | COLUMN schema_name[.table_name][.column_name] 
-   | [VIRTUAL] KEY schema_name[.table_name][.key_name] 
+   | [VIRTUAL] KEY schema_name[.table_name][.key_name] 
    }  
 { <trigger_event> <procedure_specifier> } [ ; ] 
- 
+ 
 <trigger_event> ::= 
-{ BEFORE | AFTER | INSTEAD OF } 
+{ BEFORE | R_After | INSTEAD OF } 
 { [ INSERT ] [ , ] [ UPDATE ] [ , ] [ DELETE ] [ , ] [ FETCH ]  [ , ] [ LOAD ]} 
 
 <procedure_specifier> ::= 
 [ WITH <procedure_option> [ ,...n ] ]
-AS { [schema_name.] { procedure_name | number } | <sql_statement_block> }  
- 
+AS { [schema_name.] { procedure_name | number } | <sql_statement_block> }  
+ 
 <procedure_option> ::=
 [ @parameter_name =
-  { table_name
-  | column_name [.$Value]
-  | $RowID
-  | $Date
-  | $Time
-  | $Timestamp
-  | constant } ]
+  { table_name
+  | column_name [.$R_Value]
+  | $R_RowID
+  | $R_Date
+  | $R_Time
+  | $R_Timestamp
+  | constant } ]
 */
 
-ceate_procedure_statement
-	:	Create (Proc | Procedure)
-		(	sch=schema_name Period 
+create_procedure_statement
+	:	R_Create (R_Proc | R_Procedure)
+	    procedure_declaration
+		R_As
+		block_statement
+	;
+	
+create_function_statement
+    :   R_Create R_Function
+        procedure_declaration
+        R_Returns elementary_type_name
+		R_As
+		block_statement
+    ;
+            
+procedure_declaration
+    :
+		(	sch=schema_name S_Period 
 			(	name1=new_procedure_name 
 				{declareSchemaProcedure($sch.text->chars, $name1.text->chars);}
 			|	num1=new_procedure_number
@@ -867,10 +968,7 @@ ceate_procedure_statement
 				{declareProcedure($num2.text->chars);}
 			)
 		)
-		LeftParen new_parameter (Comma new_parameter)* RightParen
-		As
-		block_statement
-		Semicolon?
+		S_LeftParen new_parameter (S_Comma new_parameter)* S_RightParen
 	;
 	
 new_parameter
@@ -878,34 +976,33 @@ new_parameter
 	:	param=new_variable_name 
 		typ=datatype_name  
 		{typeName = $typ.text->chars;}
-		(	Default exp=typed_constant[typeName]
-//			{declareParameterWithDefault($param.text->chars, $typ.text->chars, $exp.value);}
+		(	R_Default exp=typed_constant[typeName]
+			{declareParameterWithDefault($param.text->chars, $typ.text->chars, $exp.text->chars);}
 			
 		|	{declareParameter($param.text->chars, $typ.text->chars);}
 		)
 	;
 // CREATE { PROC | PROCEDURE } [ schema_name.] { procedure_name | number } 
-//     [ { @parameter_name data_type } [ = default_value ] ] [ ,...n ] 
+//     [ { @parameter_name data_type } [ = default_value ] ] [ ,...n ] 
 
 block_statement
 	:
-	Begin Semicolon
+	R_Begin S_Semicolon
 	procedure_statement_list
-	End
+	R_End
 	;
 	
 procedure_statement_list
 	:
 	procedure_statement
-	(Semicolon procedure_statement)*
-	Semicolon?
+	(S_Semicolon procedure_statement)*
+	S_Semicolon?
 	;
 
 procedure_statement
 	:
 	(	block_statement
-	|	select_statement
-    |	select_into_statement
+	|	exec_SQL_statement
     |	get_diagnostics_statement 
     |	allocate_cursor_statement
     |	associate_locator_statement
@@ -937,69 +1034,48 @@ procedure_statement
     )
 	;
 
+exec_SQL_statement
+	:	ExecSQLStatement
+	;
+	
+exec_TQL_statement
+	:	ExecSQLStatement
+	;
+	
 select_statement
-	:
-	Select
-	;
-	
-select_into_statement
-	:
-	SelectInto
-	;
-	
-scalar_subquery
-	:
-	LeftParen
-	select_statement
-	RightParen
-	;
-	
-vector_subquery
-	:	
-	LeftParen
-	select_statement
-	RightParen
+	:	R_Select
 	;
 	
 get_diagnostics_statement 
 	:	
-	Get Dioagnostics variable_name AssignEq (Return_Status | Row_Count | Exception)
+	R_Get R_Diagnostics variable_name S_AssignEq (R_Return_Status | R_Row_Count | R_Exception)
 	;
 	
 allocate_cursor_statement
 	:
-	Allocate cursor_variable_name Cursor For Result Set locator_variable_name
-	;
-
-cursor_variable_name
-	:	{IsCursorVariable(LT(1).text->chars) }?	id=Identifier
-		
+	R_Allocate cursor_variable_name R_Cursor R_For R_Result R_Set locator_variable_name
 	;
 	
 associate_locator_statement
 	:
-	Associate (Result Set)? (Locator | Locators) LeftParen locator_variable_list RightParen With (Proc | Procedure) procedure_name
+	R_Associate (R_Result R_Set)? (R_Locator | R_Locators) S_LeftParen locator_variable_list S_RightParen R_With (R_Proc | R_Procedure) procedure_name
 	;
 	
 locator_variable_list
 	:
 	locator_variable_name
-	(Comma locator_variable_name)*
-	;
-
-locator_variable_name
-	:	{IsLocatorVariable(LT(1).text->chars) }?	id=Identifier
+	(S_Comma locator_variable_name)*
 	;
 	
 call_statement
 	:
-	Call procedure_name LeftParen procedure_parameter_list RightParen
+	R_Call procedure_name S_LeftParen procedure_parameter_list S_RightParen
 	;
 	
 procedure_parameter_list
 	:
-	(	variable_or_constant (Comma variable_or_constant)* (Comma QuestionMark)*
-	|	QuestionMark  (Comma QuestionMark)*
+	(	variable_or_constant (S_Comma variable_or_constant)* (S_Comma S_QuestionMark)*
+	|	S_QuestionMark  (S_Comma S_QuestionMark)*
 	)
 	;
 	
@@ -1010,8 +1086,8 @@ variable_or_constant
 	
 typed_constant[char * type]
 	:	{ IsNumericType(type) }?	numeric_constant
-	|	{ IsStringType(type) }?		String_Constant
-	|	{ IsCharType(type) }?		Char_Constant
+	|	{ IsStringType(type) }?		V_String_Constant
+	|	{ IsCharType(type) }?		V_Char_Constant
 	|	{ IsDateType(type) }?		date_constant
 	|	{ IsTimeType(type) }?		time_constant
 	|	{ IsDateTimeType(type) }?	datetime_constant
@@ -1020,8 +1096,8 @@ typed_constant[char * type]
 	
 constant
 	:	numeric_constant
-	|	String_Constant
-	|	Char_Constant
+	|	V_String_Constant
+	|	V_Char_Constant
 	|	date_constant
 	|	time_constant
 	|	datetime_constant
@@ -1030,7 +1106,7 @@ constant
 	
 case_statement
 	:
-	Case
+	R_Case
 	(	var=variable_name	simple_case_body[$var.text->chars]
 	|	searched_case_body
 	)
@@ -1038,50 +1114,50 @@ case_statement
 	
 simple_case_body [char * var_name]
 	:
-	(When typed_expression[var_name] Then procedure_statement Semicolon)+
-	End Case
+	(R_When typed_expression[var_name] R_Then procedure_statement S_Semicolon)+
+	R_End R_Case
 	;
 	
 searched_case_body
 	:
-	(When condition Then procedure_statement Semicolon)+
-	End Case
+	(R_When condition R_Then procedure_statement S_Semicolon)+
+	R_End R_Case
 	;
 	
 close_cursor_statement
 	:
-	Close Cursor? cursor_variable_name
+	R_Close R_Cursor? cursor_variable_name
 	;
 	
 declare_statement
 @init	{char * typeName = NULL;}
 	:
-	Declare
-	(	(Continue | Exit | Undo) Handler For (condition_variable_name | handler_condition) procedure_statement
+	R_Declare
+	(	(R_Continue | R_Exit | R_Undo) R_Handler R_For (condition_variable_name | handler_condition) procedure_statement
 	|	var=new_variable_name 
-		(	Condition For cond=handler_condition
+		(	R_Condition R_For cond=handler_condition
 			{declareCondition($var.text->chars, $cond.text->chars);}
-		|	Cursor (With Hold)? (With Return To (Caller | Client)? )? For procedure_statement
+		|	R_Cursor (R_With R_Hold)? (R_With R_Return R_To (R_Caller | R_Client)? )? R_For procedure_statement
 			{declareCursor($var.text->chars, $cond.text->chars);}
 		|	typ=datatype_name 
 			{typeName = $typ.text->chars;}
-			Default exp=typed_constant[typeName]
-//			{declareVariable($var.text->chars, $typ.text->chars, $exp.value);}
+			R_Default exp=typed_constant[typeName]
+			{declareVariable($var.text->chars, typeName, $exp.text->chars);}
 		)
 	)
 	;
 
 datatype_name
 	:	elementary_type_name
-	|	Range 		Of elementary_type_name
-	|	Array 		Of elementary_type_name (array_bounds)+
-	|	Set 		Of elementary_type_name
-	|	Structure 	LeftParen structure_field (Comma structure_field)* RightParen
-	|	Enum 		LeftParen constant 		  (Comma constant)* 	   RightParen
+	|	R_Range 		R_Of elementary_type_name
+	|	R_Array 		R_Of elementary_type_name (array_bounds)+
+	|	R_Set 		R_Of elementary_type_name
+	|	R_Structure 	S_LeftParen structure_field (S_Comma structure_field)* S_RightParen
+	|	R_Enum 		S_LeftParen constant 		  (S_Comma constant)* 	   S_RightParen
 	;
 	
 array_bounds
-	:	LeftBracket Unsigned_Integer RightBracket
+	:	S_LeftBracket V_Unsigned_Integer_Constant S_RightBracket
 	;
 	
 structure_field
@@ -1089,106 +1165,103 @@ structure_field
 	;
 	
 elementary_type_name
-	:	TinyInt
-	|	Boolean
-	|	SmallInt
-	|	USmallInt
-	|	Int
-	|	UInt
-	|	Integer
-	|	UInteger
-	|	BigInt
-	|	UBigInt
-	|	(	Decimal	
-		|	Dec		
-		|	Numeric	
-		|	Fixed	
+	:	R_TinyInt
+	|	R_Boolean
+	|	R_SmallInt
+	|	R_USmallInt
+	|	R_Int
+	|	R_UInt
+	|	R_Integer
+	|	R_UInteger
+	|	R_BigInt
+	|	R_UBigInt
+	|	(	R_Decimal	
+		|	R_Dec		
+		|	R_Numeric	
+		|	R_Fixed	
 		)
 		precision_scale?
-	|	Float
-	|	Double	Precision?
-	|	Real
-	|	Money
-	|	SmallMoney
-	|	(	Char 
-		|	Character
-		|	Byte 
-		|	Binary	
-		|	Bit	
+	|	R_Float
+	|	R_Double	R_Precision?
+	|	R_Real
+	|	R_Money
+	|	R_SmallMoney
+	|	(	R_Char 
+		|	R_Character
+		|	R_Byte 
+		|	R_Binary	
+		|	R_Bit	
 		)
-		(Varying)? precision? 
-	|	(	(Long)? VarChar
-		|	(Long)? VarBinary
-		|	(Long)? Blob
-		|	(Long)? Clob
-		|	(Long)? Text
-		|	Bfile
-		|	Xml
-		|	Url
+		(R_Varying)? precision? 
+	|	(	(R_Long)? R_VarChar
+		|	(R_Long)? R_VarBinary
+		|	(R_Long)? R_Blob
+		|	(R_Long)? R_Clob
+		|	(R_Long)? R_Text
+		|	R_Bfile
+		|	R_Xml
+		|	R_Url
 		)
 		precision?
-	|	Date
-	|	Time		precision?
-	|	DateTime	(With Timezone (LeftParen (integer_constant | timezone_name)  RightParen)? )?
-	|	Timestamp	precision?	(With Timezone (LeftParen (integer_constant | timezone_name)  RightParen)? )?
-	|	Interval	(Year_To_Month | Day_To_Second)
-	|	Timezone	(LeftParen (integer_constant | timezone_name)  RightParen)?
-	|	Guid
-	|	Inet
-	|	Macaddr
+	|	R_Date
+	|	R_Time		precision?
+	|	R_DateTime	(R_With R_Timezone (S_LeftParen (integer_constant | timezone_name)  S_RightParen)? )?
+	|	R_Timestamp	precision?	(R_With R_Timezone (S_LeftParen (integer_constant | timezone_name)  S_RightParen)? )?
+	|	R_Interval	(R_Year_To_Month | R_Day_To_Second)
+	|	R_Timezone	(S_LeftParen (integer_constant | timezone_name)  S_RightParen)?
+	|	R_Guid
+	|	R_Inet
+	|	R_Macaddr
 	;
 
 precision
-options{k=1;}
-	:	LeftParen Unsigned_Integer RightParen
+	:	S_LeftParen V_Unsigned_Integer_Constant S_RightParen
 	;
 	
 precision_scale
-options{k=1;}
-//	:	LeftParen  RightParen 
-	:	LeftParen Unsigned_Integer ( Comma Unsigned_Integer RightParen | RightParen )
+	:	S_LeftParen V_Unsigned_Integer_Constant ( S_Comma V_Unsigned_Integer_Constant S_RightParen | S_RightParen )
 	;
 
 fetch_cursor_statament
-	:	Fetch From cursor_variable_name Into variable_name (Comma variable_name)
+	:	R_Fetch R_From cursor_variable_name R_Into variable_name (S_Comma variable_name)
 	;
 	
 for_statement
 	:	
-	(	lab=new_label_name Colon
+	(	lab=new_label_name S_Colon
 		{declareLabel($lab.text->chars);}
-		For loop1=new_variable_name As 
+		R_For loop1=new_variable_name R_As 
 		{declareLoop($loop1.text->chars);}
-		(	cur1=new_variable_name Cursor (With Hold)? For
+		(	cur1=new_variable_name R_Cursor (R_With R_Hold)? R_For
 			{declareCursor($cur1.text->chars);}
 			sel1a=select_statement
-			Do
-	   		procedure_statement (Semicolon procedure_statement)* Semicolon?
- 			End (For)? (lab2=Identifier {IsMatchingName($lab.text->chars, $lab2.text->chars) }? )?
+			R_Do
+	   		procedure_statement_list
+ 			R_End (R_For)? (lab2=V_Identifier {IsMatchingName($lab.text->chars, $lab2.text->chars) }? )?
 			{undeclareCursor($cur1.text->chars);}
 			
 		|	sel1b=select_statement
-			Do
-		   	procedure_statement (Semicolon procedure_statement)* Semicolon?
- 			End (For)? (lab2=Identifier {IsMatchingName($lab.text->chars, $lab2.text->chars) }? )?
+			R_Do
+		   	procedure_statement_list
+ 			R_End (R_For)? (lab2=V_Identifier {IsMatchingName($lab.text->chars, $lab2.text->chars) }? )?
 		)
 		{undeclareLoop($loop1.text->chars);}
 		{undeclarelabel($lab.text->chars);}
 		
-	|	For loop2=new_variable_name As 
+	|	R_For loop2=new_variable_name R_As 
 		{declareLoop($loop2.text->chars);}
-		(	cur2=new_variable_name Cursor (With Hold)? For
+		(	cur2=new_variable_name R_Cursor (R_With R_Hold)? R_For
 			{declareCursor($cur2.text->chars);}
 			sel2a=select_statement
-			Do
-	   		procedure_statement (Semicolon procedure_statement)* Semicolon?
- 			End (For)? 
+			R_Do
+	   		procedure_statement_list
+ 			R_End (R_For)? 
 			{undeclareCursor($cur2.text->chars);}
 			
 		|	sel2b=select_statement
-			Do
-		   	procedure_statement (Semicolon procedure_statement)* Semicolon?
- 			End (For)? 
+			R_Do
+		   	procedure_statement_list
+ 			R_End (R_For)? 
 		)
 		{undeclareLoop($loop2.text->chars);}
 
@@ -1196,175 +1269,175 @@ for_statement
 	;
 	
 if_then_else_statement
-	:	If condition
-		Then procedure_statement Semicolon
-		(	Elseif condition
-			Then procedure_statement Semicolon
+	:	R_If condition
+		R_Then procedure_statement S_Semicolon
+		(	R_Elseif condition
+			R_Then procedure_statement S_Semicolon
 		)*
-		(	Else procedure_statement Semicolon
+		(	R_Else procedure_statement S_Semicolon
 		)?
-		End (If)?
+		R_End (R_If)?
 	;
 	
 iterate_statement
-	:	Iterate	label_name
+	:	R_Iterate	label_name
 	;
 	
 leave_statement
-	:	Leave	label_name
+	:	R_Leave	label_name
 	;
 	
 loop_statement
 	:	
-	(	lab=new_label_name Colon
+	(	lab=new_label_name S_Colon
 		{declareLabel($lab.text->chars);}
-		Loop
-		procedure_statement (Semicolon procedure_statement)* Semicolon?
-		End (Loop)? (lab2=Identifier {IsMatchingName($lab.text->chars, $lab2.text->chars) }? )?
+		R_Loop
+		procedure_statement_list
+		R_End (R_Loop)? (lab2=V_Identifier {IsMatchingName($lab.text->chars, $lab2.text->chars) }? )?
 		{undeclareLabel($lab.text->chars);}
 
-	|	Loop
-		procedure_statement (Semicolon procedure_statement)* Semicolon?
-		End (Loop)?
+	|	R_Loop
+		procedure_statement_list
+		R_End (R_Loop)?
 	)
 	;
 	
 open_cursor_statement
-	:	Open Cursor? cursor_variable_name
+	:	R_Open R_Cursor? cursor_variable_name
 	;
 
 repeat_statement
 	:	
-	(	lab=new_label_name Colon
+	(	lab=new_label_name S_Colon
 		{declareLabel($lab.text->chars);}
-		Repeat
-		(procedure_statement Semicolon)+ 
-		Until condition
-		End (Repeat)? (lab2=Identifier {IsMatchingName($lab.text->chars, $lab2.text->chars) }? )?
+		R_Repeat
+		procedure_statement_list 
+		R_Until condition
+		R_End (R_Repeat)? (lab2=V_Identifier {IsMatchingName($lab.text->chars, $lab2.text->chars) }? )?
 		{undeclareLabel($lab.text->chars);}
 
-	|	Repeat
-		(procedure_statement Semicolon)+ 
-		Until condition
-		End (Repeat)? 
+	|	R_Repeat
+		procedure_statement_list 
+		R_Until condition
+		R_End (R_Repeat)? 
 	)
 	;
 
 resignal_statement
-	:	Resignal
-		(	SqlState (Value)? (SqlStateString | string_variable) 
+	:	R_Resignal
+		(	R_SqlState (R_Value)? (V_SqlState_Constant | string_variable) 
 		|	condition_variable_name
 		)
-		(Set MessageText AssignEq (string_variable | String_Constant) )?
+		(R_Set R_Message_Text S_AssignEq (string_variable | V_String_Constant) )?
 	//	RESIGNAL SQLSTATE [VALUE] <sqlstate> [SET MESSAGE_TEXT = <variable> or <diagnostic string constant>]
 	//	RESIGNAL <condition name> [SET MESSAGE_TEXT = <variable> or <diagnostic string constant>]
 	;
 	
 return_statement
-	:	Return ( general_expression | Null 	)
+	:	R_Return ( general_expression | R_Null 	)
 	;
 	
 set_statement
-	:	Set var=variable_name AssignEq typed_expression[$var.text->chars]
+	:	R_Set var=variable_name S_AssignEq typed_expression[$var.text->chars]
 	;
 	
 signal_statement
-	:	Signal
-		(	SqlState (Value)? (SqlStateString | string_variable) 
+	:	R_Signal
+		(	R_SqlState (R_Value)? (V_SqlState_Constant | string_variable) 
 		|	condition_variable_name
 		)
-		(Set MessageText AssignEq (string_variable | String_Constant) )?
+		(R_Set R_Message_Text S_AssignEq (string_variable | V_String_Constant) )?
 	;
 	
 while_statement
 	:
-	(	lab=new_label_name Colon
+	(	lab=new_label_name S_Colon
 		{declareLabel($lab.text->chars);}
-		While condition
-		Do
-		procedure_statement (Semicolon procedure_statement)* Semicolon?
-		End (While)? (lab2=Identifier {IsMatchingName($lab.text->chars, $lab2.text->chars) }? )?
+		R_While condition
+		R_Do
+		procedure_statement_list
+		R_End (R_While)? (lab2=V_Identifier {IsMatchingName($lab.text->chars, $lab2.text->chars) }? )?
 		{undeclareLabel($lab.text->chars);}
 
-	|	While condition
-		Do
-		procedure_statement (Semicolon procedure_statement)* Semicolon?
-		End (While)?
+	|	R_While condition
+		R_Do
+		procedure_statement_list
+		R_End (R_While)?
 	)
 	;
 	
 readline_statement
-	:	Readline 		
-		LeftParen 	
-		(	(	File string_value 
+	:	R_Readline 		
+		S_LeftParen 	
+		(	(	R_File string_value 
 		    	{SetStdioFile($stringValue.text->chars);} 
-			|	Console 
+			|	R_Console 
 		    	{SetStdioFile("console");} 
 			) 
-			Comma 
+			S_Comma 
 		)?
 		formatString 
-		Comma 
+		S_Comma 
 		argumentList 
-	 	RightParen	
+	 	S_RightParen	
 		{ readlineStmt($formatString.text->chars ); }
 	;
 
 writeline_statement
-	:	Writeline		
-		LeftParen 	
-		(	(	File string_value 
+	:	R_Writeline		
+		S_LeftParen 	
+		(	(	R_File string_value 
 			    {SetStdioFile($stringValue.text->chars);} 
-			|	Console
+			|	R_Console
 				{SetStdioFile("console");} 
-			|	Trace 
+			|	R_Trace 
 			    {SetStdioFile("trace");} 
 			) 
-			Comma 
+			S_Comma 
 		)?
 		formatString 
-		Comma 
+		S_Comma 
 		argumentList 
-		RightParen
-		{ writelineStmt($formatString.text->chars, $Writeline.line ); }
+		S_RightParen
+		{ writelineStmt($formatString.text->chars, $R_Writeline.line ); }
 	;
 	
 send_statement
-	:	Send	
-		Message 						
+	:	R_Send	
+		R_Message 						
 		{InitMessageQueue();}
-		To	(	Console 				
+		R_To	(	R_Console 				
 				{SendToConsole() }?
-		 	|	que_name Period queID		
+		 	|	que_name S_Period queID		
 		 		{SendToQue($queName.text, $queID.text) }? 
 		 	) 
-		With 	
-		Format
-		LeftParen
+		R_With 	
+		R_Format
+		S_LeftParen
 		formatString 
-		Comma
+		S_Comma
 		argumentList 
-		RightParen					
+		S_RightParen					
 		{SendMessageFormat($formatString.text) }?
-		Size 	
-		LeftParen 
+		R_Size 	
+		S_LeftParen 
 		integer_constant 
-		RightParen	
+		S_RightParen	
 		{ SendMessageSize($intValue.text) }?
 		{ SendToMessageQue() }?
 	;
 
 argumentList
 	:	{ResetArgList();} 
-		( argument ( Comma argument )* )? 
+		( argument ( S_Comma argument )* )? 
 	;
 	
 argument
 	:	( variable_name 		{PushArgValue	($variable_name.text->chars);}
 		| integer_constant		{PushArgInteger	($integer_constant.text->chars);}
 		| float_constant		{PushArgFloat	($float_constant.text->chars);}
-		| String_Constant 		{PushArgString	($String_Constant.text->chars);}
-		| Char_Constant 		{PushArgChar	($Char_Constant.text->chars);} 
+		| V_String_Constant 		{PushArgString	($V_String_Constant.text->chars);}
+		| V_Char_Constant 		{PushArgChar	($V_Char_Constant.text->chars);} 
 		| date_constant			{PushArgDate	($date_constant.text->chars);}
 		| time_constant			{PushArgTime	($time_constant.text->chars);}
 		| datetime_constant		{PushArgDateTime($datetime_constant.text->chars);}
@@ -1373,142 +1446,162 @@ argument
 	;
 	
 que_name
-	:	Identifier
+	:	V_Identifier
 	;
 	
 queID
-	:	Identifier
+	:	V_Identifier
 	;
 	
 formatString
-	:	String_Constant {IsFormatString($String_Constant.text->chars) }?
+	:	V_String_Constant {IsFormatString($V_String_Constant.text->chars) }?
 	;
 
 fileCreateStmt
-	:	FileCreate		LeftParen	string_value RightParen
+	:	R_FileCreate	S_LeftParen	string_value S_RightParen
 						{ fileCreateStmt($string_value.text->chars ); }
 	;
 
 fileDeleteStmt
-	:	FileDelete		LeftParen	string_value RightParen
+	:	R_FileDelete	S_LeftParen	string_value S_RightParen
 						{ fileDeleteStmt($string_value.text-> ); }
 	;
 
 fileTouchStmt
-	:	FileTouch		LeftParen	string_value RightParen
+	:	R_FileTouch		S_LeftParen	string_value S_RightParen
 						{ fileTouchStmt($string_value.text->chars ); }
 	;
 	
 filePrintStmt
-	:	FilePrint		LeftParen	str1=string_value Comma str2=string_value RightParen
+	:	R_FilePrint		S_LeftParen	str1=string_value S_Comma str2=string_value S_RightParen
 						{ filePrintStmt($str1.text->chars, $str2.text->chars ); }
 	;
 
 fileCopyStmt
-	:	FileCopy	 	LeftParen	str1=string_value Comma str2=string_value Comma str3=string_value RightParen
+	:	R_FileCopy	 	S_LeftParen	str1=string_value S_Comma str2=string_value S_Comma str3=string_value S_RightParen
 						{ fileCopyStmt($str1.text->chars, $str2.text->chars, $str3.text->chars ); }
 	;
 	
 fileDiffStmt
-	:	FileDiff	 	LeftParen	str1=string_value Comma str2=string_value Comma str3=string_value RightParen
+	:	R_FileDiff	 	S_LeftParen	str1=string_value S_Comma str2=string_value S_Comma str3=string_value S_RightParen
 						{ fileDiffStmt( $str1.text->chars, $str2.text->chars, $str3.text->chars ); }
 	;
 	
 // ---------------------------------------------------------------------------------------------
-// ** Identifiers and Constants                                                               **
+// ** Identifiers                                                                             **
 // ---------------------------------------------------------------------------------------------
 
 variable_name
-	:	{ IsVariable(LT(1).text->chars) }? 		id=Identifier	
+	:	{ IsVariable(LT(1).text->chars) }? 		id=V_Identifier	
 	;
 
 new_variable_name
-	:	{ IsNotDeclared(LT(1).text->chars) }?	id=Identifier
+	:	{ IsNotDeclared(LT(1).text->chars) }?	id=V_Identifier
 	;
 
 new_trigger_name
-	:	{ IsNotDeclared(LT(1).text->chars) }?	id=Identifier
+	:	{ IsNotDeclared(LT(1).text->chars) }?	id=V_Identifier
 	;	
 	
 new_trigger_number	
-	:	{ IsNotDeclared(LT(1).text->chars) }?	id=Unsigned_Integer
+	:	{ IsNotDeclared(LT(1).text->chars) }?	id=V_Unsigned_Integer_Constant
 	;	
 	
 procedure_name
-	:	{ IsProcedureName(LT(1).text->chars) }?	id=Identifier
+	:	{ IsProcedureName(LT(1).text->chars) }?	id=V_Identifier
 	;
 	
 new_procedure_name
-	:	{ IsNotDeclared(LT(1).text->chars) }?	id=Identifier
+	:	{ IsNotDeclared(LT(1).text->chars) }?	id=V_Identifier
 	;	
 	
 procedure_number
-	:	{ IsProcedureName(LT(1).text->chars) }?	id=Unsigned_Integer
+	:	{ IsProcedureName(LT(1).text->chars) }?	id=V_Unsigned_Integer_Constant
 	;	
 	
 new_procedure_number	
-	:	{ IsNotDeclared(LT(1).text->chars) }?	id=Unsigned_Integer
+	:	{ IsNotDeclared(LT(1).text->chars) }?	id=V_Unsigned_Integer_Constant
 	;	
 
 new_parameter_name
-	:	{ IsNotDeclared(LT(1).text->chars) }?	id=Identifier
+	:	{ IsNotDeclared(LT(1).text->chars) }?	id=V_Identifier
 	;	
 	
 parameter_name
-	:	{ IsParameterVar(LT(1).text->chars) }?	id=Identifier
+	:	{ IsParameterVar(LT(1).text->chars) }?	id=V_Identifier
 	;
 	
 condition_variable_name
-	:	{ IsConditionVar(LT(1).text->chars) }?	id=Identifier
+	:	{ IsConditionVar(LT(1).text->chars) }?	id=V_Identifier
 	;
 	
 schema_name
-	:	{ IsSchemaName(LT(1).text->chars) }?	id=Identifier
+	:	{ IsSchemaName(LT(1).text->chars) }?	id=V_Identifier
 	;
 	
 table_name
-	:	{ IsTableName(LT(1).text->chars) }?		id=Identifier
+	:	{ IsTableName(LT(1).text->chars) }?		id=V_Identifier
 	;
 	
 new_table_name
-	:	{ IsNotDeclared(LT(1).text->chars) }?	id=Identifier
+	:	{ IsNotDeclared(LT(1).text->chars) }?	id=V_Identifier
 	;
 	
 view_name
-	:	{ IsViewName(LT(1).text->chars) }?		id=Identifier
+	:	{ IsViewName(LT(1).text->chars) }?		id=V_Identifier
 	;
 	
 column_name[char * schemaName, char * tableName]
-	:	{ IsColumnName(schemaName, tableName, LT(1).text->chars) }?		id=Identifier
+	:	{ IsColumnName(schemaName, tableName, LT(1).text->chars) }?		id=V_Identifier
 	;
 	
 key_column_name[char * schemaName, char * tableName]
-	:	{ IsKeyColumnName(schemaName, tableName, LT(1).text->chars) }?	id=Identifier
+	:	{ IsKeyColumnName(schemaName, tableName, LT(1).text->chars) }?	id=V_Identifier
+	;
+	
+new_column_name
+	:	{ IsNotDeclared(LT(1).text->chars) }?	id=V_Identifier
 	;
 	
 new_label_name
-	:	{ IsNotDeclared(LT(1).text->chars) }?	id=Identifier
+	:	{ IsNotDeclared(LT(1).text->chars) }?		id=V_Identifier
 	;
 	
 label_name
-	:	{ IsLabelName(LT(1).text->chars) }?		id=Identifier
+	:	{ IsLabelName(LT(1).text->chars) }?			id=V_Identifier
+	;
+
+locator_variable_name
+	:	{ IsLocatorVarName(LT(1).text->chars) }?	id=V_Identifier
+	;
+
+cursor_variable_name
+	:	{ IsCursorVarName(LT(1).text->chars) }?		id=V_Identifier
 	;
 
 timezone_name
-	:	{ IsTimezoneName(LT(1).text->chars) }?	tz=String_Constant
+	:	{ IsTimezoneName(LT(1).text->chars) }?		tz=V_String_Constant
+	;
+	
+character_set_name
+	:	{ IsCharacterSetName(LT(1).text->chars) }?	tz=V_String_Constant
+	;
+	
+collation_name
+	:	{ IsCharacterSetName(LT(1).text->chars) }?	tz=V_String_Constant
 	;
 	
 handler_condition
 	:
-	(	SqlException
-	|	SqlWarning
-	|	Not Found
-	|	SqlState SqlStateString
+	(	R_Sql_Exception
+	|	R_Sql_Warning
+	|	R_Not R_Found
+	|	R_SqlState V_SqlState_Constant
 	)
 	;
 	
 // ---------------------------------------------------------------------------------------------
-// ** Conditions and Boolean Expressions                                                      **
+// ** Conditions and R_Boolean Expressions                                                      **
 // ---------------------------------------------------------------------------------------------
 
 condition
@@ -1518,17 +1611,17 @@ condition
 
 boolean_expression
 	:  
-	boolean_term (Or boolean_term)*
+	boolean_term (R_Or boolean_term)*
 	;
 	
 boolean_term	
 	:
-	boolean_factor (And boolean_factor)*
+	boolean_factor (R_And boolean_factor)*
 	;
 	
 boolean_factor	
 	:
-	(Not) => Not
+	(R_Not) => R_Not
 	(	(untyped_boolean_primary)	=>	untyped_boolean_primary
 	|	(numeric_boolean_primary)	=>	numeric_boolean_primary
 	|	(string_boolean_primary)	=>	string_boolean_primary
@@ -1538,33 +1631,32 @@ boolean_factor
 	|	(time_boolean_primary)		=>	time_boolean_primary
 	|	(datetime_boolean_primary)	=>	datetime_boolean_primary
 	|	(timestamp_boolean_primary)	=>	timestamp_boolean_primary
-	|	LeftParen	
+	|	S_LeftParen	
 		condition	
-		RightParen
+		S_RightParen
 	)
 	;
 	
 untyped_boolean_primary
 	:
-	(	Exists 			scalar_subquery
-    |	Not Exists 		scalar_subquery
-	|	is_or_is_not	In Rowset 		Identifier
+	(	is_or_is_not	R_In R_Rowset 		V_Identifier
+//	|	R_Not? R_Exists 	scalar_subquery
 	)
 	;
 	
 is_or_is_not
-	:	Is	Not?
-	|	Not
+	:	R_Is	R_Not?
+	|	R_Not
 	;
 	
 relational_operator  
 	:
-    (	RelOp_EQ
-    |	RelOp_NE
-    |	RelOp_GE
-    |	RelOp_GT
-    |	RelOp_LE
-    |	RelOp_LT
+    (	S_RelOp_EQ
+    |	S_RelOp_NE
+    |	S_RelOp_GE
+    |	S_RelOp_GT
+    |	S_RelOp_LE
+    |	S_RelOp_LT
     )
     ;
     
@@ -1584,39 +1676,52 @@ typed_expression [char * var_name]
 	;
 	
 constant_value_list    :
-    LeftParen
-    constant_value_expression ( Comma constant_value_expression )*
-    RightParen
+    S_LeftParen
+    constant_value_expression ( S_Comma constant_value_expression )*
+    S_RightParen
     ;
 	
 constant_value_expression    :
     (	constant_value
     
-//    |	( Trunc | To_Char )	
-//		LeftParen
+//    |	( R_Trunc | R_To_Char )	
+//		S_LeftParen
 //		constant_value
-//		(	Comma
-//			String_Constant
+//		(	S_Comma
+//			V_String_Constant
 //		)?
-//		RightParen
+//		S_RightParen
 
-//    |	( To_Number | To_Date | To_Time |  )    
-//		LeftParen
-//		String_Constant
-//		(	Comma
-//			String_Constant
+//    |	( R_To_Number | R_To_Date | R_To_Time |  )    
+//		S_LeftParen
+//		V_String_Constant
+//		(	S_Comma
+//			V_String_Constant
 //		)?
-//		RightParen
+//		S_RightParen
     )
     ;
+  
+/* 
+constant
+	:	numeric_constant
+	|	V_String_Constant
+	|	V_Char_Constant
+	|	date_constant
+	|	time_constant
+	|	datetime_constant
+	|	timestamp_constant
+	;
+	 
+*/
 
 constant_value
 	:
-	(	constant
+	(	S_Plus		numeric_constant
+    |	S_Minus		numeric_constant
+	|	constant
     |	parameter_name
-	|	QuestionMark
-    |	Plus		numeric_constant
-    |	Minus		numeric_constant
+    |   interval_constant
 	)
 	;
 	
@@ -1630,21 +1735,21 @@ value_expression
 
 non_arithmetic_value_expression
 	:
-    (	Context 		LeftParen Identifier Comma String_Constant RightParen
-    |	Coalesce 		general_expression_set
-    |	Nvl 			LeftParen general_expression Comma general_expression RightParen
-    |	Nvl2 			LeftParen general_expression Comma general_expression Comma general_expression RightParen
-    |	Igscore 		LeftParen numeric_constant Comma (QuestionMark | Parameter) Comma Identifier Comma numeric_constant (Comma numeric_constant)? RightParen
+    (	R_Context 		S_LeftParen V_Identifier S_Comma V_String_Constant S_RightParen
+    |	R_Coalesce 		general_expression_set
+    |	R_Nvl 			S_LeftParen general_expression S_Comma general_expression S_RightParen
+    |	R_Nvl2 			S_LeftParen general_expression S_Comma general_expression S_Comma general_expression S_RightParen
+    |	R_Igscore 		S_LeftParen numeric_constant S_Comma (S_QuestionMark | R_Parameter) S_Comma V_Identifier S_Comma numeric_constant (S_Comma numeric_constant)? S_RightParen
 	)
 	;
 
 user_defined_function
 	:
-	id=Identifier 				// User Defined Function
-	{IsUserDefinedFunction($id.text->chars) }?
-	LeftParen					// note: function_name() is ambiguous and so not supported
-    nullable_expression	 	( Comma nullable_expression )*
-	RightParen
+	{IsUserDefinedFunction(LT(1).text->chars) }?
+	id=V_Identifier 				// User Defined Function
+	S_LeftParen					// note: function_name() is ambiguous and so not supported
+    nullable_expression	 	( S_Comma nullable_expression )*
+	S_RightParen
 	;
 
 // ---------------------------------------------------------------------------------------------
@@ -1653,20 +1758,27 @@ user_defined_function
 
 nullable_expression	:
 	(	general_expression
-	|	Null
+	|	R_Null
 	)
 	;
 	
+general_expression_value    :
+    (	S_QuestionMark
+    |	R_Null
+    |	general_expression
+    )
+    ;
+
 general_expression
 	:
 	(	general_value_expression
 	|	case_expression
-	|	Cast
-		LeftParen
+	|	R_Cast
+		S_LeftParen
 		general_value_expression
-		As
+		R_As
 		elementary_type_name
-		RightParen
+		S_RightParen
 	)
 	;
 
@@ -1684,7 +1796,7 @@ general_value_expression
 	
 case_expression
 	:
-	Case
+	R_Case
 	(	var=variable_name	simple_case_expression_body[$var.text->chars]
 	|	searched_case_expression_body
 	)
@@ -1692,42 +1804,35 @@ case_expression
 	
 simple_case_expression_body [char * var_name]
 	:
-	(When typed_expression[var_name] Then general_expression Semicolon)+
-	End Case
+	(R_When typed_expression[var_name] R_Then general_expression S_Comma)+
+	R_End R_Case
 	;
 
 searched_case_expression_body
 	:
-	(When condition Then general_expression Semicolon)+
-	End Case
+	(R_When condition R_Then general_expression S_Comma)+
+	R_End R_Case
 	;
 
 general_expression_set
 	:	
-    LeftParen 
-    general_expression ( Comma general_expression )*
-    RightParen
+    S_LeftParen 
+    general_expression ( S_Comma general_expression )*
+    S_RightParen
     ;
 
 general_expression_value_set
 	:	
-	(	LeftParen 
-    	general_expression_value ( Comma general_expression_value )*
-    	
-    |	vector_subquery
-    )
-    RightParen
-    ;
-
-general_expression_value    :
-    (	QuestionMark
-    |	Null
-    |	general_expression
-    )
+//	(
+	S_LeftParen 
+    general_expression_value ( S_Comma general_expression_value )*   	
+    S_RightParen
+//    |	vector_subquery
+//	)
     ;
 
 // ---------------------------------------------------------------------------------------------
-// ** Numeric Expressions                                                                     **
+// ** R_Numeric Expressions                                                                     **
 // ---------------------------------------------------------------------------------------------
 
 numeric_boolean_primary
@@ -1745,28 +1850,28 @@ numeric_boolean_primary
 numeric_boolean_predicate
 	:
 	(	is_or_is_not?
-		(	In			numeric_set
-		|	Between		numeric_expression And numeric_expression
+		(	R_In			numeric_set
+		|	R_Between		numeric_expression R_And numeric_expression
 		)
-	|	is_or_is_not	Null
+	|	is_or_is_not	R_Null
 	)
 	;	
 	
 numeric_expression
 	:
-	numeric_term		( ( Plus | Minus )		numeric_term )*
+	numeric_term		( ( S_Plus | S_Minus )		numeric_term )*
 	;
 
 numeric_term
 	:
-	numeric_factor		( ( Mult | Divide | Modulo )	numeric_factor )*
+	numeric_factor		( ( S_Mult | S_Divide | S_Modulo )	numeric_factor )*
 	;
 	
 numeric_factor
 	:
-	(	Plus	numeric_primary
+	(	S_Plus	numeric_primary
 		
-	|	Minus	numeric_primary
+	|	S_Minus	numeric_primary
 	
 	|			numeric_primary
 	)
@@ -1784,15 +1889,15 @@ numeric_primary
 	;
 	
 numeric_variable
-	:	{IsNumericVariableName(LT(1).text->chars) }?	id=Identifier
+	:	{IsNumericVariableName(LT(1).text->chars) }?	id=V_Identifier
 	;
 	
 integer_constant
-	:	Unsigned_Integer | Signed_Integer
+	:	V_Unsigned_Integer_Constant | V_Signed_Integer_Constant
 	;
 
 float_constant
-	:	Unsigned_Float	 | Signed_Float
+	:	V_Unsigned_Float_Constant	 | V_Signed_Float_Constant
 	;
 
 numeric_constant
@@ -1801,17 +1906,17 @@ numeric_constant
 	
 /*	
 sqlNUMERIC_SCALAR_SUBQUERY	:
-	LeftParen
+	S_LeftParen
 	STOK_SELECT
     sqlNUMERIC_EXPRESSION 
     (	sqlSELECT_FROM_CLAUSE
 		sqlSELECT_WHERE_CLAUSE?
 	)?
-	RightParen
+	S_RightParen
     ;
 
 sqlNUMERIC_SUBQUERY	:
-	LeftParen
+	S_LeftParen
 	STOK_SELECT
     sqlNUMERIC_EXPRESSION 
     (	sqlSELECT_FROM_CLAUSE
@@ -1819,106 +1924,106 @@ sqlNUMERIC_SUBQUERY	:
 		sqlSELECT_GROUP_CLAUSE?
 		sqlSELECT_ORDER_CLAUSE?
 	)?
-	RightParen
+	S_RightParen
     ;
 */
 numeric_coerced_value
 	:
-	To_Number				// TO_NUMBER(string_exp {,string_exp {,string_exp} } )
-	LeftParen	
+	R_To_Number				// TO_NUMBER(string_exp {,string_exp {,string_exp} } )
+	S_LeftParen	
 	( string_expression	| parameter_name )
-	(	Comma 
+	(	S_Comma 
 		string_expression 
-		(	Comma 
+		(	S_Comma 
 			string_expression 
 		)? 
 	)?	
-	RightParen
+	S_RightParen
 	;
 	
 
 numeric_function
 	:
-	(	(	Abs			// ABS(number)						// alt 1
-		|	Acos		// ACOS(number)		
-		|	Asin		// ASIN(number)
-		|	Atan		// ATAN(number)	
-		|	Cos			// COS(number)	
-		|	Exp			// EXP(number)		
-		|	Log			// LOG(number)		
-		|	Log10		// LOG10(number)
-		|	Log2		// LOG2(number)
-		|	Sin			// sin(number)	
-		|	Sqrt		// sqrt(number)
-		|	Tan			// tan(number)
+	(	(	R_Abs			// R_Abs(number)						// alt 1
+		|	R_Acos		// R_Acos(number)		
+		|	R_Asin		// ASIN(number)
+		|	R_Atan		// ATAN(number)	
+		|	R_Cos			// COS(number)	
+		|	R_Exp			// EXP(number)		
+		|	R_Log			// LOG(number)		
+		|	R_Log10		// LOG10(number)
+		|	R_Log2		// LOG2(number)
+		|	R_Sin			// sin(number)	
+		|	R_Sqrt		// sqrt(number)
+		|	R_Tan			// tan(number)
 		)
-		LeftParen	
+		S_LeftParen	
 		numeric_expression	
-		RightParen
+		S_RightParen
 		
-	|	(	Atan2		// ATAN2(number[, number])			// alt 2
-		|	Mod			// MOD(number[, number])
-		|	Round		// ROUND(number[, decimal])
+	|	(	R_Atan2		// ATAN2(number[, number])			// alt 2
+		|	R_Mod			// MOD(number[, number])
+		|	R_Round		// ROUND(number[, decimal])
 		)				
-		LeftParen	
+		S_LeftParen	
 		numeric_expression	
-		Comma	
+		S_Comma	
 		numeric_expression	
-		RightParen
+		S_RightParen
 
-	|	(	Ascii				// ASCII(string_exp)
-		|	Bit_Length			// BIT_LENGTH(string_exp)	// alt 3
-		|	Char_Length			// CHAR_LENGTH(string_exp)
-		|	Character_Length	// CHARACTER_LENGTH(string_exp)
-		|	Octet_Length		// OCTET_LENGTH(string_exp)
-		|	Length				// LENGTH(string_exp)
+	|	(	R_Ascii				// ASCII(string_exp)
+		|	R_Bit_Length			// BIT_LENGTH(string_exp)	// alt 3
+		|	R_Char_Length			// CHAR_LENGTH(string_exp)
+		|	R_Character_Length	// CHARACTER_LENGTH(string_exp)
+		|	R_Octet_Length		// OCTET_LENGTH(string_exp)
+		|	R_Length				// LENGTH(string_exp)
 		)
-		LeftParen	
+		S_LeftParen	
 		string_expression	
-		RightParen
+		S_RightParen
 
-	|	Extract			// EXTRACT( date_part FROM date_expression )	// alt 4
-		LeftParen	
+	|	R_Extract			// EXTRACT( date_part FROM date_expression )	// alt 4
+		S_LeftParen	
 		date_part	
-		From 
+		R_From 
 		(	(date_expression)		=>	date_expression 
 		|	(datetime_expression)	=>	datetime_expression
 		|	(timestamp_expression)	=>	timestamp_expression
 		|	interval_expression
 		)	
-		RightParen
+		S_RightParen
 		
-	|	Position		// POSITION( string1 IN string2 )	// alt 5
-		LeftParen	
-		string_expression	In string_expression
-		RightParen
+	|	R_Position		// POSITION( string1 IN string2 )	// alt 5
+		S_LeftParen	
+		string_expression	R_In string_expression
+		S_RightParen
 
-    |	Count 				// COUNT()							// alt 6
+    |	R_Count 				// COUNT()							// alt 6
 		general_expression_set   
 			
-    |	(	Avg 			 									// alt 7
-    	|	Max 			 
-    	|	Min 			 
-    	|	Sum 			 
-    	|	Var 			 
-    	|	StdDev 			 
-    	|	SumSquare 			  
+    |	(	R_Avg 			 									// alt 7
+    	|	R_Max 			 
+    	|	R_Min 			 
+    	|	R_Sum 			 
+    	|	R_Var 			 
+    	|	R_StdDev 			 
+    	|	R_SumSquare 			  
     	)
     	numeric_set
 	)
 	;
 	
 numeric_set
-	:	LeftParen
-		numeric_expression	(Comma numeric_expression)*
-		RightParen
+	:	S_LeftParen
+		numeric_expression	(S_Comma numeric_expression)*
+		S_RightParen
 	;
 
 numeric_value_set
 	:  
-	(	LeftParen	
-		numeric_value 		(Comma numeric_value )*
-		RightParen
+	(	S_LeftParen	
+		numeric_value 		(S_Comma numeric_value )*
+		S_RightParen
 		
 //	|	numeric_vector_subquery
 	)
@@ -1926,8 +2031,8 @@ numeric_value_set
 	
 numeric_value 
 	:
-    (	QuestionMark
-    |	Null
+    (	S_QuestionMark
+    |	R_Null
     |	numeric_expression
     )
 	;
@@ -1951,133 +2056,133 @@ string_boolean_primary
 string_boolean_predicate
 	:
 	(	is_or_is_not?
-		(	In			string_set
-		|	Like		String_Constant
-		|	Between		string_expression And string_expression
+		(	R_In			string_set
+		|	R_Like		V_String_Constant
+		|	R_Between		string_expression R_And string_expression
 		)
 	|	is_or_is_not
-		Null
+		R_Null
 	)
 	;
 	
 string_expression
 	:
-	string_primary 	( (Plus | Bar ) string_primary )*
+	string_primary 	( (S_Plus | S_Bar ) string_primary )*
 	;
 
 string_primary			:
 	(	string_variable
 	|	string_coerced_value
 	|	string_function
-	|	String_Constant
+	|	V_String_Constant
 	)
 	;
 
 string_variable
-	:	{IsStringVariableName(LT(1).text->chars) }?	id=Identifier
+	:	{IsStringVariableName(LT(1).text->chars) }?	id=V_Identifier
 	;
 
 string_coerced_value	:
-	To_Char
-	LeftParen
+	R_To_Char
+	S_LeftParen
 	general_expression
-	RightParen
+	S_RightParen
 	;
 	
 
 string_function
 	:
-	(	(	Lcase		// LCASE(string_exp)
-		|	Ltrim		// LTRIM(string_exp)
-		|	Rtrim		// RTRIM(string_exp)
-		|	Soundex		// SOUNDEX(string_exp)
-		|	Ucase		// UCASE(string_exp)
-	    |	Upper 		// UPPER(string_exp)
-    	|	Lower 		// LOWER(string_exp)
-		|	Synonyms	// SYNONYMS(string_exp)
+	(	(	R_Lcase		// LCASE(string_exp)
+		|	R_Ltrim		// LTRIM(string_exp)
+		|	R_Rtrim		// RTRIM(string_exp)
+		|	R_Soundex		// SOUNDEX(string_exp)
+		|	R_Ucase		// UCASE(string_exp)
+	    |	R_Upper 		// UPPER(string_exp)
+    	|	R_Lower 		// LOWER(string_exp)
+		|	R_Synonyms	// SYNONYMS(string_exp)
 		)
-		LeftParen	
+		S_LeftParen	
 		string_expression	
-		RightParen
+		S_RightParen
 
-	|	(	Concat		// CONCAT(string_exp1, string_exp2)
-		|	Difference	// DIFFERENCE(string_exp1, string_exp2)
+	|	(	R_Concat		// CONCAT(string_exp1, string_exp2)
+		|	R_Difference	// DIFFERENCE(string_exp1, string_exp2)
 		)
-		LeftParen	
-		string_expression	Comma string_expression
-		RightParen
+		S_LeftParen	
+		string_expression	S_Comma string_expression
+		S_RightParen
 
-	|	Replace			// REPLACE(string_exp1, string_exp2, string_exp3)
-		LeftParen	
-		string_expression	Comma string_expression	Comma string_expression
-		RightParen
+	|	R_Replace			// REPLACE(string_exp1, string_exp2, string_exp3)
+		S_LeftParen	
+		string_expression	S_Comma string_expression	S_Comma string_expression
+		S_RightParen
 
-	|	Space			// SPACE(count)
-		LeftParen	
+	|	R_Space			// SPACE(count)
+		S_LeftParen	
 		numeric_expression	
-		RightParen
+		S_RightParen
 
-	|	Repeat			// REPEAT(string_exp, count)
-		LeftParen	
-		string_expression	Comma numeric_expression	
-		RightParen
+	|	R_Repeat			// REPEAT(string_exp, count)
+		S_LeftParen	
+		string_expression	S_Comma numeric_expression	
+		S_RightParen
 
-	|	(	Substring	// SUBSTRING(string_exp, start, length)
-		|	Substr		// SUBSTR(string_exp, start, length)
+	|	(	R_Substring	// SUBSTRING(string_exp, start, length)
+		|	R_Substr		// SUBSTR(string_exp, start, length)
 		)
-		LeftParen	
-		string_expression	Comma numeric_expression	Comma numeric_expression	
-		RightParen
+		S_LeftParen	
+		string_expression	S_Comma numeric_expression	S_Comma numeric_expression	
+		S_RightParen
 
-	|	Locate			// LOCATE(string_exp1, string_exp2[, start])
-		LeftParen	
-		string_expression	Comma string_expression	( Comma numeric_expression	)?
-		RightParen
+	|	R_Locate			// LOCATE(string_exp1, string_exp2[, start])
+		S_LeftParen	
+		string_expression	S_Comma string_expression	( S_Comma numeric_expression	)?
+		S_RightParen
 		
-	|	Trim 			//	trim( { [LEADING | TRAILING | BOTH] trim_char | trim_char } FROM trim_source )
-	    LeftParen 
-	    (	Leading 
+	|	R_Trim 			//	trim( { [LEADING | TRAILING | BOTH] trim_char | trim_char } FROM trim_source )
+	    S_LeftParen 
+	    (	R_Leading 
 	    	string_expression
 	    
-    	|	Trailing 
+    	|	R_Trailing 
     		string_expression
     	
-    	|	Both 
+    	|	R_Both 
     		string_expression
     	
     	|	string_expression
     	)
-		(	From
+		(	R_From
 			string_expression
 		)?
-    	RightParen
+    	S_RightParen
 	)
 	;
 	
 	
 string_set
-	:	LeftParen
-		string_value	(Comma string_value)*
-		RightParen
+	:	S_LeftParen
+		string_value	(S_Comma string_value)*
+		S_RightParen
 	;
 	
 string_value
-	:	string_variable | String_Constant
+	:	string_variable | V_String_Constant
 	;	
 	
 string_value_set
 	:
-	LeftParen
-	(	string_set_value 	(Comma string_set_value )*
+	S_LeftParen
+	(	string_set_value 	(S_Comma string_set_value )*
 //	|	STOK_SELECT sqlSELECT_CLAUSE
 	)
-	RightParen
+	S_RightParen
 	;
 
 string_set_value
 	:
-    (	QuestionMark
-    |	Null
+    (	S_QuestionMark
+    |	R_Null
     |	string_expression
     )
 	;
@@ -2088,22 +2193,22 @@ string_set_value
 
 clob_boolean_primary
 	:	
-	(	Not?
-		Contains
-		LeftParen
+	(	R_Not?
+		R_Contains
+		S_LeftParen
 		clob_variable
-		Comma
+		S_Comma
 		string_value
-		RightParen
+		S_RightParen
 			
 	|	clob_variable
 		is_or_is_not	
-		Null
+		R_Null
 	)	
 	;
 	
 clob_variable
-	:	{IsClobVariable(LT(1).text->chars) }?	id=Identifier
+	:	{IsClobVariable(LT(1).text->chars) }?	id=V_Identifier
 	;
 		
 // ---------------------------------------------------------------------------------------------
@@ -2114,15 +2219,15 @@ blob_boolean_primary
 	:	
 	blob_variable
 	is_or_is_not	
-	Null
+	R_Null
 	;
 	
 blob_variable
-	:	{IsBlobVariable(LT(1).text->chars) }?	id=Identifier
+	:	{IsBlobVariable(LT(1).text->chars) }?	id=V_Identifier
 	;
 		
 // ---------------------------------------------------------------------------------------------
-// ** Date Expressions                                                                        **
+// ** R_Date Expressions                                                                        **
 // ---------------------------------------------------------------------------------------------
 
 date_boolean_primary
@@ -2140,11 +2245,11 @@ date_boolean_primary
 date_boolean_predicate	
 	:
 	(	is_or_is_not?
-		(	In			date_set
-		|	Between		date_expression And date_expression
+		(	R_In			date_set
+		|	R_Between		date_expression R_And date_expression
 		)
 	|	is_or_is_not
-		Null
+		R_Null
 	)
 	;
 	
@@ -2155,80 +2260,80 @@ date_expression
 	|	date_coerced_value
 	|	date_function
 	)
-//	(	( Minus | Plus )
+//	(	( S_Minus | S_Plus )
 //		interval_expression
 //	)*
 	;
 	
 date_variable
-	:	{IsDateVariableName(LT(1).text->chars) }?	id=Identifier
+	:	{IsDateVariableName(LT(1).text->chars) }?	id=V_Identifier
 	;
 
 
 date_constant
-	:	Date String_Constant
+	:	R_Date V_String_Constant
 	;
 	
 date_coerced_value
 	:
-	To_Date		// TO_DATE(string_sxp {,string_exp {,string_exp} } )	
-	LeftParen	
+	R_To_Date		// TO_DATE(string_sxp {,string_exp {,string_exp} } )	
+	S_LeftParen	
 	(	(datetime_expression)	=>	datetime_expression 
 	|	(timestamp_expression)	=>	timestamp_expression 
 	|	string_expression
 	)
-	(	Comma 
+	(	S_Comma 
 		string_expression 
-		(	Comma 
+		(	S_Comma 
 			string_expression 
 		)? 
 	)?	
-	RightParen
+	S_RightParen
 	;
 
 date_function
 	:
-	(	(Trunc LeftParen date_expression)	=>
-		Trunc
-		LeftParen	
+	(	(R_Trunc S_LeftParen date_expression)	=>
+		R_Trunc
+		S_LeftParen	
 		date_expression
-		(	Comma 
+		(	S_Comma 
 			string_expression 
 		)?	
-		RightParen
+		S_RightParen
 
-	|	SysDate
+	|	R_SysDate
 	)
 	;
 
 date_set
 	:
-	LeftParen
-	(	date_expression 	(Comma date_expression )*
+	S_LeftParen
+	(	date_expression 	(S_Comma date_expression )*
 //	|	STOK_SELECT sqlSELECT_CLAUSE
 	)
-	RightParen
+	S_RightParen
 	;
 
 date_value_set
 	:
-	LeftParen
-	(	date_set_value 		(Comma date_set_value )*
+	S_LeftParen
+	(	date_set_value 		(S_Comma date_set_value )*
 //	|	STOK_SELECT sqlSELECT_CLAUSE
 	)
-	RightParen
+	S_RightParen
 	;
 
 date_set_value
 	:
-    (	QuestionMark
-    |	Null
+    (	S_QuestionMark
+    |	R_Null
     |	date_expression
     )
 	;
 
 // ---------------------------------------------------------------------------------------------
-// ** Time Expressions                                                                        **
+// ** R_Time Expressions                                                                        **
 // ---------------------------------------------------------------------------------------------
 
 time_boolean_primary
@@ -2246,11 +2351,11 @@ time_boolean_primary
 time_boolean_predicate	
 	:
 	(	is_or_is_not?
-		(	In			time_set
-		|	Between		time_expression And time_expression
+		(	R_In			time_set
+		|	R_Between		time_expression R_And time_expression
 		)
 	|	is_or_is_not
-		Null
+		R_Null
 	)
 	;
 	
@@ -2264,72 +2369,72 @@ time_expression
 	;
 	
 time_variable
-	:	{IsTimeVariableName(LT(1).text->chars) }?	id=Identifier
+	:	{IsTimeVariableName(LT(1).text->chars) }?	id=V_Identifier
 	;
 	
 time_constant
-	:	Time String_Constant
+	:	R_Time V_String_Constant
 	;
 	
 time_coerced_value
 	:
-	To_Time		// TO_TIME(string_sxp {,string_exp {,string_exp} } )	
-	LeftParen	
+	R_To_Time		// TO_TIME(string_sxp {,string_exp {,string_exp} } )	
+	S_LeftParen	
 	( 	(datetime_expression)	=>	datetime_expression 
 	|	(timestamp_expression)	=>	timestamp_expression 
 	| 	string_expression 
 	)
-	(	Comma 
+	(	S_Comma 
 		string_expression 
-		(	Comma 
+		(	S_Comma 
 			string_expression 
 		)? 
 	)?	
-	RightParen
+	S_RightParen
 	;
 
 time_function
 	:
-	(	Trunc
-		LeftParen	
+	(	R_Trunc
+		S_LeftParen	
 		time_expression
-		(	Comma 
+		(	S_Comma 
 			string_expression 
 		)?	
-		RightParen
+		S_RightParen
 
-	|	SysTime
+	|	R_SysTime
 	)
 	;
 
 time_set
 	:
-	LeftParen
-	(	time_expression 	(Comma time_expression )*
+	S_LeftParen
+	(	time_expression 	(S_Comma time_expression )*
 //	|	STOK_SELECT sqlSELECT_CLAUSE
 	)
-	RightParen
+	S_RightParen
 	;
 
 time_value_set
 	:
-	LeftParen
-	(	time_set_value 		(Comma time_set_value )*
+	S_LeftParen
+	(	time_set_value 		(S_Comma time_set_value )*
 //	|	STOK_SELECT sqlSELECT_CLAUSE
 	)
-	RightParen
+	S_RightParen
 	;
 
 time_set_value
 	:
-    (	QuestionMark
-    |	Null
+    (	S_QuestionMark
+    |	R_Null
     |	time_expression
     )
 	;
 
 // ---------------------------------------------------------------------------------------------
-// ** DateTime Expressions                                                                    **
+// ** R_DateTime Expressions                                                                    **
 // ---------------------------------------------------------------------------------------------
 
 datetime_boolean_primary
@@ -2346,11 +2451,11 @@ datetime_boolean_primary
 	
 datetime_boolean_predicate	:
 	(	is_or_is_not?
-		(	In			datetime_set
-		|	Between		datetime_expression And datetime_expression
+		(	R_In			datetime_set
+		|	R_Between		datetime_expression R_And datetime_expression
 		)
 	|	is_or_is_not
-		Null
+		R_Null
 	)
 	;
 	
@@ -2362,75 +2467,75 @@ datetime_expression
 	|	datetime_function
 	|	datetime_constant
 	)
-//	(	( Minus | Plus )
+//	(	( S_Minus | S_Plus )
 //		interval_expression
 //	)*
 	;
 
 datetime_variable
-	:	{IsDateTimeVariableName(LT(1).text->chars) }?	id=Identifier
+	:	{IsDateTimeVariableName(LT(1).text->chars) }?	id=V_Identifier
 	;
 
 datetime_constant
-	:	DateTime String_Constant
+	:	R_DateTime V_String_Constant
 	;
 	
 datetime_set
 	:
-	LeftParen
-	datetime_expression 	(Comma datetime_expression )*
-	RightParen
+	S_LeftParen
+	datetime_expression 	(S_Comma datetime_expression )*
+	S_RightParen
 	;
 	
 datetime_value_set
 	:	
-	LeftParen
-	(	datetime_set_value 	(Comma datetime_set_value )*
+	S_LeftParen
+	(	datetime_set_value 	(S_Comma datetime_set_value )*
 //	|	STOK_SELECT sqlSELECT_CLAUSE
 	)
-	RightParen
+	S_RightParen
 	;
 
 datetime_set_value    :
-    (	QuestionMark
-    |	Null
+    (	S_QuestionMark
+    |	R_Null
     |	datetime_expression
     )
 	;
 
 datetime_coerced_value
 	:
-	To_DateTime			// converts char of CHAR, VARCHAR2, NCHAR, or NVARCHAR2 datatype to a value of DATETIME datatype. The fmt is a datetime model format specifying the format of char. If you omit fmt, then char must be in the default date format. If fmt is J, for Julian, then char must be an integer.
-	LeftParen			// see http://docs.oracle.com/cd/B19306_01/server.102/b14200/functions183.htm
+	R_To_DateTime			// converts char of CHAR, VARCHAR2, NCHAR, or NVARCHAR2 datatype to a value of DATETIME datatype. The fmt is a datetime model format specifying the format of char. R_If you omit fmt, then char must be in the default date format. R_If fmt is J, for Julian, then char must be an integer.
+	S_LeftParen			// see http://docs.oracle.com/cd/B19306_01/server.102/b14200/functions183.htm
 	( datetime_constant | string_expression | timestamp_expression )
-	(	Comma 
+	(	S_Comma 
 		string_expression 
-		(	Comma 
+		(	S_Comma 
 			string_expression 
 		)? 
 	)?	
-	RightParen
+	S_RightParen
 	;
 	
 datetime_function
 	:
-	(	(Trunc LeftParen datetime_expression)	=>
-		Trunc			// TRUNC ( datetime_exp {, string_exp } ) 
-		LeftParen		// returns a date truncated to a specific unit of measure 
+	(	(R_Trunc S_LeftParen datetime_expression)	=>
+		R_Trunc			// TRUNC ( datetime_exp {, string_exp } ) 
+		S_LeftParen		// returns a date truncated to a specific unit of measure 
 						// http://www.techonthenet.com/oracle/functions/trunc_date.php
 		datetime_expression 	
-		(	Comma 
+		(	S_Comma 
 			string_expression 
 		)?	
-		RightParen
+		S_RightParen
 		
-	|	SysDateTime		// The built-in function SYSDATE returns a DATE value containing the current date and time on your system. 
+	|	R_SysDateTime		// The built-in function SYSDATE returns a DATE value containing the current date and time on your system. 
 						// http://infolab.stanford.edu/~ullman/fcdb/oracle/or-time.html
 	)
 	;
 
 // ---------------------------------------------------------------------------------------------
-// ** Timestamp Expressions                                                                    **
+// ** R_Timestamp Expressions                                                                    **
 // ---------------------------------------------------------------------------------------------
 
 timestamp_boolean_primary
@@ -2447,11 +2552,11 @@ timestamp_boolean_primary
 
 timestamp_boolean_predicate	:
 	(	is_or_is_not?
-		(	In			timestamp_set
-		|	Between		timestamp_expression And timestamp_expression
+		(	R_In			timestamp_set
+		|	R_Between		timestamp_expression R_And timestamp_expression
 		)
 	|	is_or_is_not
-		Null
+		R_Null
 	)
 	;
 	
@@ -2462,75 +2567,73 @@ timestamp_expression
 	|	timestamp_function
 	|	timestamp_constant
 	)
-//	(	( Minus | Plus )
+//	(	( S_Minus | S_Plus )
 //		interval_expression
 //	)*
 	;
 	
 timestamp_variable
-	:	{IsTimestampVariableName(LT(1).text->chars) }?	id=Identifier
+	:	{IsTimestampVariableName(LT(1).text->chars) }?	id=V_Identifier
 	;
 
 timestamp_constant
-	:	Timestamp String_Constant
+	:	R_Timestamp V_String_Constant
 	;
 
 timestamp_set
 	:
-	LeftParen
-	timestamp_expression 	(Comma timestamp_expression )*
-	RightParen
+	S_LeftParen
+	timestamp_expression 	(S_Comma timestamp_expression )*
+	S_RightParen
 	;
 	
 timestamp_value_set
 	:	
-	LeftParen
-	( timestamp_set_value 	(Comma timestamp_set_value )*
-//	|	STOK_SELECT sqlSELECT_CLAUSE
+	S_LeftParen
+	( timestamp_set_value 	(S_Comma timestamp_set_value )*
+//	|	SelectStatement select
 	)
-	RightParen
+	S_RightParen
 	;
 
 timestamp_set_value    :
-    (	QuestionMark
-    |	Null
+    (	S_QuestionMark
+    |	R_Null
     |	timestamp_expression
     )
 	;
 
 timestamp_coerced_value
 	:
-	To_Timestamp			// converts char of CHAR, VARCHAR2, NCHAR, or NVARCHAR2 datatype to a value of DATETIME datatype. The fmt is a datetime model format specifying the format of char. If you omit fmt, then char must be in the default date format. If fmt is J, for Julian, then char must be an integer.
-	LeftParen			// see http://docs.oracle.com/cd/B19306_01/server.102/b14200/functions183.htm
+	R_To_Timestamp			// converts char of CHAR, VARCHAR2, NCHAR, or NVARCHAR2 datatype to a value of DATETIME datatype. The fmt is a datetime model format specifying the format of char. R_If you omit fmt, then char must be in the default date format. R_If fmt is J, for Julian, then char must be an integer.
+	S_LeftParen			
 	( timestamp_constant | string_expression )
-	(	Comma 
+	(	S_Comma 
 		string_expression 
-		(	Comma 
+		(	S_Comma 
 			string_expression 
 		)? 
 	)?	
-	RightParen
+	S_RightParen
 	;
 	
 timestamp_function
 	:
-	(	(Trunc LeftParen timestamp_expression)	=>
-		Trunc			// TRUNC ( datetime_exp {, string_exp } ) 
-		LeftParen		// returns a date truncated to a specific unit of measure 
-						// http://www.techonthenet.com/oracle/functions/trunc_date.php
+	(	(R_Trunc S_LeftParen timestamp_expression)	=>
+		R_Trunc			// TRUNC ( datetime_exp {, string_exp } ) 
+		S_LeftParen		// returns a date truncated to a specific unit of measure 
 		timestamp_expression 	
-		(	Comma 
+		(	S_Comma 
 			string_expression 
 		)?	
-		RightParen
+		S_RightParen
 		
-	|	SysTimestamp		// The built-in function SYSDATE returns a DATE value containing the current date and time on your system. 
-						// http://infolab.stanford.edu/~ullman/fcdb/oracle/or-time.html
+	|	R_SysTimestamp		// The built-in function SYSDATE returns a DATE value containing the current date and time on your system. 
 	)
 	;
 
 // ---------------------------------------------------------------------------------------------
-// ** Interval Expressions                                                                    **
+// ** R_Interval Expressions                                                                    **
 // ---------------------------------------------------------------------------------------------
 
 interval_boolean_primary
@@ -2547,22 +2650,22 @@ interval_boolean_primary
 
 interval_boolean_predicate	:
 	(	is_or_is_not?
-		(	In			interval_set
-		|	Between		interval_expression And interval_expression
+		(	R_In			interval_set
+		|	R_Between		interval_expression R_And interval_expression
 		)
 	|	is_or_is_not
-		Null
+		R_Null
 	)
 	;
 
 interval_expression
 	:
-	(	interval_primary		( ( Plus | Minus )		interval_primary )*
+	(	interval_primary		( ( S_Plus | S_Minus )		interval_primary )*
 		
-	|	(	(date_expression 		Minus	date_expression)		=>	date_expression 		Minus	date_expression
-		|	(time_expression		Minus	time_expression)		=>	time_expression			Minus	time_expression
-		|	(datetime_expression	Minus	datetime_expression)	=>	datetime_expression		Minus	datetime_expression
-		|	(timestamp_expression	Minus	timestamp_expression)	=>	timestamp_expression	Minus	timestamp_expression
+	|	(	(date_expression 		S_Minus	date_expression)		=>	date_expression 		S_Minus	date_expression
+		|	(time_expression		S_Minus	time_expression)		=>	time_expression			S_Minus	time_expression
+		|	(datetime_expression	S_Minus	datetime_expression)	=>	datetime_expression		S_Minus	datetime_expression
+		|	(timestamp_expression	S_Minus	timestamp_expression)	=>	timestamp_expression	S_Minus	timestamp_expression
 		)
 	)
 	;
@@ -2577,14 +2680,14 @@ interval_primary
 	;
 	
 interval_variable
-	:	{IsIntervalVariableName(LT(1).text->chars) }?	id=Identifier
+	:	{IsIntervalVariableName(LT(1).text->chars) }?	id=V_Identifier
 	;
 
 interval_constant
-	:	Interval 
-		(	String_Constant
+	:	R_Interval 
+		(	V_String_Constant
 		
-		|	( Plus | Minus )
+		|	( S_Plus | S_Minus )
     		(	date_constant
 			|	time_constant
 			|	datetime_constant
@@ -2597,42 +2700,41 @@ interval_constant
 interval_qualifier
 options{k=1;}
     :
-    (	non_second_date_part precision? ( To ( non_second_date_part | Second ) precision? )?
+    (	non_second_date_part precision? ( R_To ( non_second_date_part | R_Second ) precision? )?
     
-    |	Second precision_scale?
+    |	R_Second precision_scale?
     )
     ;
     	
 interval_coerced_value
 	:
-	(	To_YMInterval	// converts char of CHAR, VARCHAR2, NCHAR, or NVARCHAR2 datatype to a value of Interval datatype. The fmt is a datetime model format specifying the format of char. If you omit fmt, then char must be in the default date format. If fmt is J, for Julian, then char must be an integer.
-	|	To_DSInterval	// see http://docs.oracle.com/cd/B19306_01/server.102/b14200/functions183.htm
+	// converts char of CHAR, VARCHAR2, NCHAR, or NVARCHAR2 datatype to a value of R_Interval datatype. 
+	// The fmt is a datetime model format specifying the format of char. 
+	// R_If you omit fmt, then char must be in the default date format. 
+	// R_If fmt is J, for Julian, then char must be an integer.
+	(	R_To_YMInterval	
+	|	R_To_DSInterval	
 	)
-	LeftParen		
-	(	date_constant
-	|	time_constant
-	|	datetime_constant
-	|	timestamp_constant
-	| 	string_expression 
-	)
-	(	Comma 
+	S_LeftParen		
+	string_expression 
+	(	S_Comma 
 		string_expression 
-		(	Comma 
+		(	S_Comma 
 			string_expression 
 		)? 
 	)?	
-	RightParen
+	S_RightParen
 	;
 	
 interval_function
 	:
-	DateDiff			
-	LeftParen			
+	R_DateDiff			
+	S_LeftParen			
 	(	date_part
 		(	(datetime_expression)	=>	datetime_expression
 		|	(timestamp_expression)	=>	timestamp_expression
 		)
-		Comma
+		S_Comma
 		(	(datetime_expression)	=>	datetime_expression
 		|	(timestamp_expression)	=>	timestamp_expression
 		)
@@ -2642,40 +2744,40 @@ interval_function
 		)	=>
 		ymd_date_part
 		date_expression
-		Comma
+		S_Comma
 		date_expression
 		
 	|	(day_part time_expression)	=>
 		day_part
 		time_expression 	
-		Comma 
+		S_Comma 
 		time_expression 	
 	)
-	RightParen	
+	S_RightParen	
 	;
 	
 interval_set
 	:
-	LeftParen
-	Interval String_Constant 	(Comma Interval String_Constant )*
-	RightParen
+	S_LeftParen
+	R_Interval V_String_Constant 	(S_Comma R_Interval V_String_Constant )*
+	S_RightParen
 	;
 	
 //interval_value_set
 //	:	
-//	LeftParen
-//	( interval_set_value 	(Comma interval_set_value )*
+//	S_LeftParen
+//	( interval_set_value 	(S_Comma interval_set_value )*
 //	|	STOK_SELECT sqlSELECT_CLAUSE
 //	)
-//	RightParen
+//	S_RightParen
 //	;
 
 //interval_set_value 
-//	:	Interval String_Constant
+//	:	R_Interval V_String_Constant
 //	;
 //	:
-//  (	QuestionMark
-//  |	Null
+//  (	S_QuestionMark
+//  |	R_Null
 //  |	interval_constant
 //  |	interval_expression
 //  )
@@ -2683,58 +2785,58 @@ interval_set
 	
 date_part
 	:
-	(	Year
-    |	Month
-    |	Day
-    |	Hour
-    |	Minute
-   	|	Second
-	|	Millisecond
-	|	Microsecond
-	|	Nanosecond
-	|	Quarter
-	|	DayOfYear
-	|	Week
-	|	Timezone_Hour
-    |	Timezone_Minute
+	(	R_Year
+    |	R_Month
+    |	R_Day
+    |	R_Hour
+    |	R_Minute
+   	|	R_Second
+	|	R_Millisecond
+	|	R_Microsecond
+	|	R_Nanosecond
+	|	R_Quarter
+	|	R_DayOfYear
+	|	R_Week
+	|	R_Timezone_Hour
+    |	R_Timezone_Minute
 	)
 	;	
 
 ymd_date_part
 	:
-	(	Year
-    |	Month
-    |	Day
-	|	Quarter
-	|	DayOfYear
-	|	Week
+	(	R_Year
+    |	R_Month
+    |	R_Day
+	|	R_Quarter
+	|	R_DayOfYear
+	|	R_Week
     )
     ;
 	
 non_second_date_part
 	:	
-	(	Year
-    |	Month
-    |	Day
-    |	Hour
-    |	Minute
+	(	R_Year
+    |	R_Month
+    |	R_Day
+    |	R_Hour
+    |	R_Minute
 	)
     ;
 	
 day_part
 	:	
-	(	Hour
-    |	Minute
-	|	Second
-	|	Millisecond
-	|	Microsecond
-	|	Nanosecond
+	(	R_Hour
+    |	R_Minute
+	|	R_Second
+	|	R_Millisecond
+	|	R_Microsecond
+	|	R_Nanosecond
 	)
 	;
 
 time_zone_field
     :
-    (	Timezone_Hour
-    |	Timezone_Minute
+    (	R_Timezone_Hour
+    |	R_Timezone_Minute
     )
     ;
